@@ -15,8 +15,11 @@
  */
 package com.github.xincao9.jswitcher.cli;
 
+import com.alibaba.fastjson.JSON;
 import com.github.xincao9.jsonrpc.JsonRPCClient;
 import com.github.xincao9.jsonrpc.Request;
+import com.github.xincao9.jsonrpc.Response;
+import com.github.xincao9.jswitcher.api.vo.Switcher;
 import java.util.ArrayList;
 import java.util.List;
 import org.jline.reader.Completer;
@@ -60,11 +63,17 @@ public class JswitcherCli {
                 if (ss == null || ss.length == 0) {
                 } else if (ss.length == 1 && "list".equalsIgnoreCase(ss[0])) {
                     Request request = createRequest(host, port, ss[0], null);
-                    jsonRPCClient.invoke(request);
+                    Response<List<Switcher>> response = jsonRPCClient.invoke(request);
+                    System.out.println(JSON.toJSONString(response, true));
                 } else if (ss.length == 2 && ("check".equalsIgnoreCase(ss[0]) || "on".equalsIgnoreCase(ss[0]) || "off".equalsIgnoreCase(ss[0]))) {
                     params.add(ss[1]);
                     Request request = createRequest(host, port, ss[0], params);
-                    jsonRPCClient.invoke(request);
+                    if ("check".equalsIgnoreCase(ss[0])) {
+                        Response<Boolean> response = jsonRPCClient.invoke(request);
+                        System.out.println(JSON.toJSONString(response, true));
+                    } else {
+                        jsonRPCClient.invoke(request);
+                    }
                 } else if (ss.length == 3 && ("set".equalsIgnoreCase(ss[0]) || "connect".equalsIgnoreCase(ss[0]))) {
                     if ("connect".equalsIgnoreCase(ss[0])) {
                         host = ss[1];
