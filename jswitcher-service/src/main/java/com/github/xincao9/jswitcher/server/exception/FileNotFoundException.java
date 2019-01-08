@@ -2,7 +2,7 @@ package com.github.xincao9.jswitcher.server.exception;
 
 /**
  *
- * @author xin.cao@asiainnovations.com
+ * @author xincao9@gmail.com
  */
 public class FileNotFoundException extends Error {
 

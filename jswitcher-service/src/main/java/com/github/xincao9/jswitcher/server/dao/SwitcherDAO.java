@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author xin.cao@asiainnovations.com
+ * @author xincao9@gmail.com
  */
 public class SwitcherDAO {
 
