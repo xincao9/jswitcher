@@ -99,9 +99,12 @@ public class JswitcherCli {
                     }
                 }
             } catch (UserInterruptException e) {
+                jsonRPCClient.shutdown();
+                return;
             } catch (EndOfFileException e) {
                 jsonRPCClient.shutdown();
                 return;
+            } catch (Throwable e) {
             }
         }
     }
