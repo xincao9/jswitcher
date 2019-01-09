@@ -13,9 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.xincao9.jswitcher.server;
+package com.github.xincao9.jswitcher.service;
 
-import com.github.xincao9.jswitcher.service.SwitcherServer;
 import com.github.xincao9.jswitcher.api.service.SwitcherService;
 import com.github.xincao9.jswitcher.api.vo.QoS;
 import java.io.IOException;
@@ -65,13 +64,6 @@ public class SwitcherServerTest {
         } else {
             System.out.println("key closed state");
         }
-        System.in.read();
-        if (switcherService.isOpen("key")) {
-            System.out.println("key open state");
-        } else {
-            System.out.println("key closed state");
-        }
-        System.in.read();
         switcherServer.close();
     }
 
