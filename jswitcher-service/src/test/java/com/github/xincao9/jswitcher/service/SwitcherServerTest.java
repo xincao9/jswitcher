@@ -64,6 +64,7 @@ public class SwitcherServerTest {
         } else {
             System.out.println("key closed state");
         }
+        System.in.read();
         switcherServer.close();
     }
 

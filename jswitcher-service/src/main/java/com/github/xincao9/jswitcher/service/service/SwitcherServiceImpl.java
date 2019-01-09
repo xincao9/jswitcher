@@ -191,6 +191,11 @@ public class SwitcherServiceImpl implements SwitcherService {
         return switcheres;
     }
 
+    /**
+     * 
+     * @param key
+     * @return 
+     */
     public Switcher getSwitcherByKey(String key) {
         if (StringUtils.isNotEmpty(key)) {
             return switcherDAO.selectByKey(key);

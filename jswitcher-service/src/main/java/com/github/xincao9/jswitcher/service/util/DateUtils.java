@@ -31,11 +31,24 @@ public class DateUtils {
     public static final String DATETIME_YYYY_MM_DD_FORMAT = "yyyy-MM-dd";
     public static final String DATETIME_YYYYMMDD_FORMAT = "yyyyMMdd";
 
+    /**
+     * 
+     * @param date
+     * @param pattern
+     * @return 
+     */
     public static String format (Date date, String pattern) {
         SimpleDateFormat sdf = new SimpleDateFormat(pattern);
         return sdf.format(date);
     }
 
+    /**
+     * 
+     * @param date
+     * @param pattern
+     * @return
+     * @throws ParseException 
+     */
     public static Date parser (String date, String pattern) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat(pattern);
         return sdf.parse(date);

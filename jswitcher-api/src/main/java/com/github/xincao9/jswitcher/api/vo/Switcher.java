@@ -58,4 +58,9 @@ public class Switcher {
         this.qos = qos;
     }
 
+    @Override
+    public String toString() {
+        return "Switcher{" + "key=" + key + ", describe=" + describe + ", open=" + open + ", qos=" + qos + '}';
+    }
+
 }

@@ -41,10 +41,17 @@ public class SwitcherServer {
     private Configure configure;
     private SwitcherServiceImpl switcherService;
 
+    /**
+     *
+     */
     public SwitcherServer() {
         this(DEFAULT_CONFIG_FILE);
     }
 
+    /**
+     *
+     * @param filename
+     */
     public SwitcherServer(String filename) {
         LOGGER.warn("switcher-server turning on！");
         configure = new Configure(filename);
@@ -74,6 +81,9 @@ public class SwitcherServer {
         });
     }
 
+    /**
+     *
+     */
     public void close() {
         if (jsonRPCServer != null) {
             try {
@@ -86,10 +96,18 @@ public class SwitcherServer {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public Configure getConfigure() {
         return configure;
     }
 
+    /**
+     *
+     * @return
+     */
     public SwitcherService getSwitcherService() {
         return this.switcherService;
     }

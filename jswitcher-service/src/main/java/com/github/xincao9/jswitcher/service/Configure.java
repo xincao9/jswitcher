@@ -36,6 +36,10 @@ public class Configure {
     private final int databasePort;
     private final String databaseOpts;
 
+    /**
+     *
+     * @param filename
+     */
     public Configure(String filename) {
         Properties properties = new Properties();
         try {
@@ -55,30 +59,58 @@ public class Configure {
         this.databaseOpts = properties.getProperty("switcher.database.opts", "useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&autoReconnect=true");
     }
 
+    /**
+     *
+     * @return
+     */
     public int getPort() {
         return this.port;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getDatabaseName() {
         return this.databaseName;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getDatabaseUser() {
         return this.databaseUser;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getDatabasePass() {
         return this.databasePass;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getDatabaseHost() {
         return this.databaseHost;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getDatabasePort() {
         return this.databasePort;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getDatabaseOpts() {
         return this.databaseOpts;
     }
