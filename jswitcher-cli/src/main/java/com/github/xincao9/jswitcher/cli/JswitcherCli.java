@@ -41,9 +41,9 @@ import org.jline.terminal.TerminalBuilder;
 public class JswitcherCli {
 
     /**
-     * 
+     *
      * @param args
-     * @throws Throwable 
+     * @throws Throwable
      */
     public static void main(String... args) throws Throwable {
         Terminal terminal = TerminalBuilder.builder()
@@ -55,7 +55,7 @@ public class JswitcherCli {
                 .completer(completer)
                 .history(new DefaultHistory())
                 .build();
-        String prompt = "jswitcher >";
+        String prompt = "jswitcher $>";
         JsonRPCClient jsonRPCClient = JsonRPCClient.defaultJsonRPCClient();
         jsonRPCClient.start();
         String host = "127.0.0.1";
@@ -66,26 +66,29 @@ public class JswitcherCli {
                 String[] ss = line.split("\\s");
                 List<Object> params = new ArrayList();
                 if (ss == null || ss.length == 0) {
-                } else if (ss.length == 1 && "list".equalsIgnoreCase(ss[0])) {
-                    if ("list".equalsIgnoreCase(ss[0])) {
-                        Request request = createRequest(host, port, ss[0], null);
+                    continue;
+                }
+                String cmd = ss[0];
+                if (ss.length == 1 && any(cmd, "list", "quit")) {
+                    if ("list".equalsIgnoreCase(cmd)) {
+                        Request request = createRequest(host, port, cmd, null);
                         Response<List<Switcher>> response = jsonRPCClient.invoke(request);
                         System.out.println(JSON.toJSONString(response, true));
-                    } else if ("quit".equalsIgnoreCase(ss[0])) {
+                    } else if ("quit".equalsIgnoreCase(cmd)) {
                         jsonRPCClient.shutdown();
                         return;
                     }
-                } else if (ss.length == 2 && ("check".equalsIgnoreCase(ss[0]) || "on".equalsIgnoreCase(ss[0]) || "off".equalsIgnoreCase(ss[0]))) {
+                } else if (ss.length == 2 && any(cmd, "check", "on", "off")) {
                     params.add(ss[1]);
-                    Request request = createRequest(host, port, ss[0], params);
-                    if ("check".equalsIgnoreCase(ss[0])) {
+                    Request request = createRequest(host, port, cmd, params);
+                    if ("check".equalsIgnoreCase(cmd)) {
                         Response<Boolean> response = jsonRPCClient.invoke(request);
                         System.out.println(JSON.toJSONString(response, true));
                     } else {
                         jsonRPCClient.invoke(request);
                     }
-                } else if (ss.length == 3 && ("set".equalsIgnoreCase(ss[0]) || "connect".equalsIgnoreCase(ss[0]))) {
-                    if ("connect".equalsIgnoreCase(ss[0])) {
+                } else if (ss.length == 3 && any(cmd, "connect", "set")) {
+                    if ("connect".equalsIgnoreCase(cmd)) {
                         host = ss[1];
                         port = Short.valueOf(ss[2]);
                     } else {
@@ -103,16 +106,25 @@ public class JswitcherCli {
         }
     }
 
+    private static boolean any(String cmd, String... cs) {
+        for (String s : cs) {
+            if (cmd.equalsIgnoreCase(s)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
-     * 
+     *
      * @param host
      * @param port
      * @param method
      * @param params
      * @return
-     * @throws Throwable 
+     * @throws Throwable
      */
-    public static Request createRequest(String host, short port, String method, List<Object> params) throws Throwable {
+    private static Request createRequest(String host, short port, String method, List<Object> params) throws Throwable {
         Request request = Request.createRequest(Boolean.TRUE, method, params);
         request.setHost(host);
         request.setPort(port);
