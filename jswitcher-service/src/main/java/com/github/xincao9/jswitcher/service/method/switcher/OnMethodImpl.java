@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.xincao9.jswitcher.server.method.switcher;
+package com.github.xincao9.jswitcher.service.method.switcher;
 
 import com.github.xincao9.jsonrpc.Request;
 import com.github.xincao9.jsonrpc.server.SyncMethod;

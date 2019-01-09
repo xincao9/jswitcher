@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.xincao9.jswitcher.server.service;
+package com.github.xincao9.jswitcher.service.service;
 
 import com.github.xincao9.jswitcher.api.service.SwitcherService;
 import com.github.xincao9.jswitcher.api.vo.QoS;
 import com.github.xincao9.jswitcher.api.vo.Switcher;
-import com.github.xincao9.jswitcher.server.Configure;
-import com.github.xincao9.jswitcher.server.dao.SwitcherDAO;
-import com.github.xincao9.jswitcher.server.exception.KeyNotFoundException;
-import com.github.xincao9.jswitcher.server.exception.ParameterInvalidException;
+import com.github.xincao9.jswitcher.service.Configure;
+import com.github.xincao9.jswitcher.service.dao.SwitcherDAO;
+import com.github.xincao9.jswitcher.service.exception.KeyNotFoundException;
+import com.github.xincao9.jswitcher.service.exception.ParameterInvalidException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

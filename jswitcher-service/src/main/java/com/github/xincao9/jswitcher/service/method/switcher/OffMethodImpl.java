@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.xincao9.jswitcher.server.method.switcher;
+package com.github.xincao9.jswitcher.service.method.switcher;
 
 import com.github.xincao9.jsonrpc.Request;
 import com.github.xincao9.jsonrpc.server.SyncMethod;
@@ -24,18 +24,15 @@ import java.util.List;
  *
  * @author xincao9@gmail.com
  */
-public class CheckMethodImpl implements SyncMethod<Boolean> {
+public class OffMethodImpl implements SyncMethod<Void> {
 
-    /**
-     * 
-     */
     private final SwitcherService switcherService;
 
     /**
      * 
      * @param switcherService 
      */
-    public CheckMethodImpl(SwitcherService switcherService) {
+    public OffMethodImpl(SwitcherService switcherService) {
         this.switcherService = switcherService;
     }
 
@@ -45,9 +42,10 @@ public class CheckMethodImpl implements SyncMethod<Boolean> {
      * @return 
      */
     @Override
-    public Boolean exec(Request request) {
+    public Void exec(Request request) {
         List<Object> params = request.getParams();
-        return switcherService.check((String) params.get(0));
+        switcherService.off((String) params.get(0));
+        return null;
     }
 
     /**
@@ -56,7 +54,7 @@ public class CheckMethodImpl implements SyncMethod<Boolean> {
      */
     @Override
     public String getName() {
-        return "check";
+        return "off";
     }
 
 }

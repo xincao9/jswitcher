@@ -13,18 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.xincao9.jswitcher.server;
+package com.github.xincao9.jswitcher.service;
 
 import com.github.xincao9.jsonrpc.server.JsonRPCServer;
 import com.github.xincao9.jswitcher.api.service.SwitcherService;
-import com.github.xincao9.jswitcher.server.dao.SwitcherDAO;
-import com.github.xincao9.jswitcher.server.exception.SwitcherServerException;
-import com.github.xincao9.jswitcher.server.method.switcher.CheckMethodImpl;
-import com.github.xincao9.jswitcher.server.method.switcher.ListMethodImpl;
-import com.github.xincao9.jswitcher.server.method.switcher.OffMethodImpl;
-import com.github.xincao9.jswitcher.server.method.switcher.OnMethodImpl;
-import com.github.xincao9.jswitcher.server.method.switcher.SetMethodImpl;
-import com.github.xincao9.jswitcher.server.service.SwitcherServiceImpl;
+import com.github.xincao9.jswitcher.service.dao.SwitcherDAO;
+import com.github.xincao9.jswitcher.service.exception.SwitcherServerException;
+import com.github.xincao9.jswitcher.service.method.switcher.CheckMethodImpl;
+import com.github.xincao9.jswitcher.service.method.switcher.ListMethodImpl;
+import com.github.xincao9.jswitcher.service.method.switcher.OffMethodImpl;
+import com.github.xincao9.jswitcher.service.method.switcher.OnMethodImpl;
+import com.github.xincao9.jswitcher.service.method.switcher.SetMethodImpl;
+import com.github.xincao9.jswitcher.service.service.SwitcherServiceImpl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

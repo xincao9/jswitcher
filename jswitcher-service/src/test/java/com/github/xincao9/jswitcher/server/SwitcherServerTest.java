@@ -15,6 +15,7 @@
  */
 package com.github.xincao9.jswitcher.server;
 
+import com.github.xincao9.jswitcher.service.SwitcherServer;
 import com.github.xincao9.jswitcher.api.service.SwitcherService;
 import com.github.xincao9.jswitcher.api.vo.QoS;
 import java.io.IOException;

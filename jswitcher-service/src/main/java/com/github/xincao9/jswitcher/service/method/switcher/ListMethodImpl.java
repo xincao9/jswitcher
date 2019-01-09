@@ -13,48 +13,47 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.xincao9.jswitcher.server.method.switcher;
+package com.github.xincao9.jswitcher.service.method.switcher;
 
 import com.github.xincao9.jsonrpc.Request;
 import com.github.xincao9.jsonrpc.server.SyncMethod;
 import com.github.xincao9.jswitcher.api.service.SwitcherService;
+import com.github.xincao9.jswitcher.api.vo.Switcher;
 import java.util.List;
 
 /**
  *
  * @author xincao9@gmail.com
  */
-public class SetMethodImpl implements SyncMethod<Void> {
+public class ListMethodImpl implements SyncMethod<List<Switcher>> {
 
     private final SwitcherService switcherService;
 
     /**
-     *
-     * @param switcherService
+     * 
+     * @param switcherService 
      */
-    public SetMethodImpl(SwitcherService switcherService) {
+    public ListMethodImpl(SwitcherService switcherService) {
         this.switcherService = switcherService;
     }
 
     /**
-     *
+     * 
      * @param request
-     * @return
+     * @return 
      */
     @Override
-    public Void exec(Request request) {
-        List<Object> params = request.getParams();
-        switcherService.set((String) params.get(0), (Boolean) params.get(1));
-        return null;
+    public List<Switcher> exec(Request request) {
+        return this.switcherService.list();
     }
 
     /**
-     *
-     * @return
+     * 
+     * @return 
      */
     @Override
     public String getName() {
-        return "set";
+        return "list";
     }
 
 }

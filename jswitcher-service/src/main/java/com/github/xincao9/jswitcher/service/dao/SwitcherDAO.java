@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.xincao9.jswitcher.server.dao;
+package com.github.xincao9.jswitcher.service.dao;
 
 import com.github.xincao9.jswitcher.api.vo.QoS;
 import com.github.xincao9.jswitcher.api.vo.Switcher;
-import com.github.xincao9.jswitcher.server.Configure;
-import com.github.xincao9.jswitcher.server.exception.SwitcherServerException;
+import com.github.xincao9.jswitcher.service.Configure;
+import com.github.xincao9.jswitcher.service.exception.SwitcherServerException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;

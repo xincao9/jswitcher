@@ -13,36 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.xincao9.jswitcher.server.exception;
+package com.github.xincao9.jswitcher.service.exception;
 
 /**
  *
  * @author xincao9@gmail.com
  */
-public class FileNotFoundException extends Error {
+public class KeyNotFoundException extends Error {
 
-    /**
-     * 
-     * @param message 
-     */
-    public FileNotFoundException(String message) {
+    public KeyNotFoundException(String message) {
         super(message);
     }
 
-    /**
-     * 
-     * @param message
-     * @param cause 
-     */
-    public FileNotFoundException(String message, Throwable cause) {
+    public KeyNotFoundException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    /**
-     * 
-     * @param cause 
-     */
-    public FileNotFoundException(Throwable cause) {
+    public KeyNotFoundException(Throwable cause) {
         super(cause);
     }
 

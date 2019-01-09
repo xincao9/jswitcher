@@ -13,23 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.xincao9.jswitcher.server.exception;
+package com.github.xincao9.jswitcher.service.exception;
 
 /**
  *
  * @author xincao9@gmail.com
  */
-public class SwitcherServerException extends Error {
+public class ParameterInvalidException extends Error {
 
-    public SwitcherServerException(String message) {
+    public ParameterInvalidException(String message) {
         super(message);
     }
 
-    public SwitcherServerException(String message, Throwable cause) {
+    public ParameterInvalidException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public SwitcherServerException(Throwable cause) {
+    public ParameterInvalidException(Throwable cause) {
         super(cause);
     }
 
