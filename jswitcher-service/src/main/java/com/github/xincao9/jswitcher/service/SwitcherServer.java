@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
 public class SwitcherServer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SwitcherServer.class);
-    private static final String DEFAULT_CONFIG_FILE = "/switcher-server.properties";
+    private static final String DEFAULT_CONFIG_FILE = "/switcher.properties";
     private JsonRPCServer jsonRPCServer;
     private Configure configure;
     private SwitcherServiceImpl switcherService;
