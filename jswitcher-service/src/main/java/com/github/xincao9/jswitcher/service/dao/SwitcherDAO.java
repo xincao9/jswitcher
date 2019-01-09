@@ -25,8 +25,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -34,30 +32,28 @@ import org.slf4j.LoggerFactory;
  */
 public class SwitcherDAO {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SwitcherDAO.class);
     private Connection connection;
     private static final String INSERT = "insert into switcher (`key`, `open`, `describe`, `qos`) values (?, ?, ?, ?)";
     private static final String UPDATE = "update switcher set `open`=? where `key`=? and `open`=?";
     private static final String SELECT = "select `id`, `key`, `open`, `describe`, `qos` from switcher where `key`=?";
 
     /**
-     * 
-     * @param configure 
+     *
+     * @param configure
      */
     public SwitcherDAO(Configure configure) {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             this.connection = DriverManager.getConnection(String.format("jdbc:mysql://%s:%s/%s?%s", configure.getDatabaseHost(), configure.getDatabasePort(), configure.getDatabaseName(), configure.getDatabaseOpts()), configure.getDatabaseUser(), configure.getDatabasePass());
         } catch (Throwable e) {
-            LOGGER.error(e.getMessage());
             throw new SwitcherServerException("SwitcherDAO abnormal", e);
         }
     }
 
     /**
-     * 
+     *
      * @param switcher
-     * @return 
+     * @return
      */
     public int insert(Switcher switcher) {
         PreparedStatement statement = null;
@@ -69,14 +65,12 @@ public class SwitcherDAO {
             statement.setString(4, String.valueOf(switcher.getQos()));
             return statement.executeUpdate();
         } catch (Throwable e) {
-            LOGGER.error(e.getMessage());
             throw new SwitcherServerException("SwitcherDAO abnormal", e);
         } finally {
             if (statement != null) {
                 try {
                     statement.close();
                 } catch (Throwable e) {
-                    LOGGER.error(e.getMessage());
                     throw new SwitcherServerException("SwitcherDAO abnormal", e);
                 }
 
@@ -85,11 +79,11 @@ public class SwitcherDAO {
     }
 
     /**
-     * 
+     *
      * @param key
      * @param expected
      * @param open
-     * @return 
+     * @return
      */
     public int changeStatusByKey(String key, boolean expected, boolean open) {
         PreparedStatement statement = null;
@@ -100,14 +94,12 @@ public class SwitcherDAO {
             statement.setBoolean(3, expected);
             return statement.executeUpdate();
         } catch (Throwable e) {
-            LOGGER.error(e.getMessage());
             throw new SwitcherServerException("SwitcherDAO abnormal", e);
         } finally {
             if (statement != null) {
                 try {
                     statement.close();
                 } catch (Throwable e) {
-                    LOGGER.error(e.getMessage());
                     throw new SwitcherServerException("SwitcherDAO abnormal", e);
                 }
             }
@@ -115,9 +107,9 @@ public class SwitcherDAO {
     }
 
     /**
-     * 
+     *
      * @param key
-     * @return 
+     * @return
      */
     public Switcher selectByKey(String key) {
         List<Switcher> switcheres = null;
@@ -140,7 +132,6 @@ public class SwitcherDAO {
                 }
             }
         } catch (Throwable e) {
-            LOGGER.error(e.getMessage());
             throw new SwitcherServerException("SwitcherDAO abnormal", e);
         } finally {
             try {
@@ -151,7 +142,6 @@ public class SwitcherDAO {
                     statement.close();
                 }
             } catch (Throwable e) {
-                LOGGER.error(e.getMessage());
                 throw new SwitcherServerException("SwitcherDAO abnormal", e);
             }
         }
