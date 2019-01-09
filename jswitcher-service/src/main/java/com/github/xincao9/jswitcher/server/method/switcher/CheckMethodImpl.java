@@ -16,7 +16,7 @@
 package com.github.xincao9.jswitcher.server.method.switcher;
 
 import com.github.xincao9.jsonrpc.Request;
-import com.github.xincao9.jsonrpc.SyncMethod;
+import com.github.xincao9.jsonrpc.server.SyncMethod;
 import com.github.xincao9.jswitcher.api.service.SwitcherService;
 import java.util.List;
 

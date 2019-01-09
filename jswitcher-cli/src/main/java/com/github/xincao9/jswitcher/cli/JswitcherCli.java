@@ -16,7 +16,7 @@
 package com.github.xincao9.jswitcher.cli;
 
 import com.alibaba.fastjson.JSON;
-import com.github.xincao9.jsonrpc.JsonRPCClient;
+import com.github.xincao9.jsonrpc.client.JsonRPCClient;
 import com.github.xincao9.jsonrpc.Request;
 import com.github.xincao9.jsonrpc.Response;
 import com.github.xincao9.jswitcher.api.vo.Switcher;

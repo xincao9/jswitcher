@@ -15,7 +15,7 @@
  */
 package com.github.xincao9.jswitcher.server;
 
-import com.github.xincao9.jsonrpc.JsonRPCServer;
+import com.github.xincao9.jsonrpc.server.JsonRPCServer;
 import com.github.xincao9.jswitcher.api.service.SwitcherService;
 import com.github.xincao9.jswitcher.server.dao.SwitcherDAO;
 import com.github.xincao9.jswitcher.server.exception.SwitcherServerException;
