@@ -24,7 +24,7 @@ com.github.xincao9:jswitcher-api:1.0
 </pre>
 
 <pre>
-## switcher-server.properties file is placed in the root of the classpath
+## switcher.properties file is placed in the root of the classpath
 
 switcher.port=12306 // listening port
 switcher.database.name=switcher // switch data is stored by default to mysql
