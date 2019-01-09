@@ -25,20 +25,59 @@ import java.util.List;
  */
 public interface SwitcherService {
 
+    /**
+     *
+     * @param key
+     * @return
+     */
     Boolean check(String key);
 
+    /**
+     *
+     * @param key
+     */
     void on(String key);
 
+    /**
+     *
+     * @param key
+     */
     void off(String key);
 
+    /**
+     *
+     * @param key
+     * @param open
+     */
     void set(String key, Boolean open);
 
+    /**
+     *
+     * @return
+     */
     List<Switcher> list();
 
+    /**
+     *
+     * @param key
+     * @param open
+     * @param describe
+     * @param qos
+     */
     void register(String key, Boolean open, String describe, QoS qos);
 
+    /**
+     *
+     * @param key
+     * @return
+     */
     Boolean isOpen(String key);
 
+    /**
+     *
+     * @param key
+     * @return
+     */
     Boolean isClose(String key);
 
 }

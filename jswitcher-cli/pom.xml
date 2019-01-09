@@ -11,22 +11,31 @@
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <jswitcher-api.version>1.0</jswitcher-api.version>
+        <jsonrpc.version>1.0</jsonrpc.version>
+        <jline.version>3.9.0</jline.version>
+        <logback.version>1.2.3</logback.version>
     </properties>
     <dependencies>
         <dependency>
             <groupId>com.github.xincao9</groupId>
             <artifactId>jswitcher-api</artifactId>
-            <version>1.0</version>
+            <version>${jswitcher-api.version}</version>
         </dependency>
         <dependency>
             <groupId>com.github.xincao9</groupId>
             <artifactId>jsonrpc</artifactId>
-            <version>1.0</version>
+            <version>${jsonrpc.version}</version>
         </dependency>
         <dependency>
             <groupId>org.jline</groupId>
             <artifactId>jline</artifactId>
-            <version>3.9.0</version>
+            <version>${jline.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
         </dependency>
     </dependencies>
     <build>

@@ -3,7 +3,7 @@
 ### java switcher service
 
 <pre>
-创建存储开关信息的表
+## create a table of storage switch information
 
 CREATE TABLE `switcher` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -18,37 +18,32 @@ CREATE TABLE `switcher` (
 </pre>
 
 <pre>
-maven pom.xml 中添加依赖
+## add dependency to pom.xml file
+
 com.github.xincao9:jswitcher-api:1.0
 </pre>
 
 <pre>
-## switcher-server.properties文件 放到classpath根目录下
+## switcher-server.properties file is placed in the root of the classpath
 
-switcher.listen.ip=0.0.0.0 // 绑定IP
-switcher.listen.port=12306 // 监听端口
-switcher.database.name=switcher // 开关数据默认存储到mysql
+switcher.port=12306 // listening port
+switcher.database.name=switcher // switch data is stored by default to mysql
 switcher.database.user=root
-switcher.database.pass=asdf
+switcher.database.pass=
 switcher.database.host=127.0.0.1
 switcher.database.port=3306
 
 </pre>
 
 <pre>
-实例代码
+## Sample code
 
-public class SwitcherServerTest {
+public class Sample {
 
-    /**
-     * Test of getSwitcherService method, of class SwitcherServer.
-     * @throws java.io.IOException
-     */
-    @Test
-    public void testGetSwitcherService() throws IOException {
+    public static void main() throws IOException {
         SwitcherServer switcherServer = new SwitcherServer();
         SwitcherService switcherService = switcherServer.getSwitcherService();
-        switcherService.register("key", Boolean.TRUE, "用于测试", QoS.API);
+        switcherService.register("key", Boolean.TRUE, "for testing", QoS.API);
         if (switcherService.isOpen("key")) {
             System.out.println("key open state");
         } else {
