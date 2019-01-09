@@ -47,7 +47,7 @@ public class CheckMethodImpl implements SyncMethod<Boolean> {
     @Override
     public Boolean exec(Request request) {
         List<Object> params = request.getParams();
-        return switcherService.check((String) params.get(0));
+        return this.switcherService.check((String) params.get(0));
     }
 
     /**

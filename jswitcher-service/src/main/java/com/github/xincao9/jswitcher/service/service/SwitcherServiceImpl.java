@@ -58,20 +58,20 @@ public class SwitcherServiceImpl implements SwitcherService {
     @Override
     public void register(String key, Boolean open, String describe, QoS qos) {
         String k = String.valueOf(key);
-        if (!keyAndSwitcher.containsKey(k)) {
+        if (!this.keyAndSwitcher.containsKey(k)) {
             Switcher switcher = getSwitcherByKey(k);
             if (switcher == null) {
-                if (!keyAndSwitcher.containsKey(k)) {
+                if (!this.keyAndSwitcher.containsKey(k)) {
                     switcher = new Switcher();
                     switcher.setKey(k);
                     switcher.setOpen(open);
                     switcher.setDescribe(describe);
                     switcher.setQos(qos);
-                    keyAndSwitcher.put(k, switcher);
+                    this.keyAndSwitcher.put(k, switcher);
                     LOGGER.warn("new registration switch {}", switcher.toString());
                 }
             } else {
-                keyAndSwitcher.put(k, switcher);
+                this.keyAndSwitcher.put(k, switcher);
                 LOGGER.warn("load switch information {}", switcher.toString());
             }
         }
@@ -86,8 +86,8 @@ public class SwitcherServiceImpl implements SwitcherService {
     @Override
     public Boolean isOpen(String key) {
         String k = String.valueOf(key);
-        if (keyAndSwitcher.containsKey(k)) {
-            return keyAndSwitcher.get(k).getOpen();
+        if (this.keyAndSwitcher.containsKey(k)) {
+            return this.keyAndSwitcher.get(k).getOpen();
         }
         LOGGER.warn("this switch has not been registered in the application. key = {}", k);
         return false;
@@ -116,10 +116,10 @@ public class SwitcherServiceImpl implements SwitcherService {
         if (StringUtils.isBlank(k)) {
             throw new ParameterInvalidException("key can not be empty!");
         }
-        if (!keyAndSwitcher.containsKey(k)) {
+        if (!this.keyAndSwitcher.containsKey(k)) {
             throw new KeyNotFoundException(String.format("key = %s can't find!", k));
         }
-        return keyAndSwitcher.get(k).getOpen();
+        return this.keyAndSwitcher.get(k).getOpen();
     }
 
     /**
@@ -133,10 +133,10 @@ public class SwitcherServiceImpl implements SwitcherService {
         if (StringUtils.isBlank(k)) {
             throw new ParameterInvalidException("key can not be empty!");
         }
-        if (!keyAndSwitcher.containsKey(k)) {
+        if (!this.keyAndSwitcher.containsKey(k)) {
             throw new KeyNotFoundException(String.format("key = %s can't find!", k));
         }
-        keyAndSwitcher.get(k).setOpen(true);
+        this.keyAndSwitcher.get(k).setOpen(true);
     }
 
     /**
@@ -150,10 +150,10 @@ public class SwitcherServiceImpl implements SwitcherService {
         if (StringUtils.isBlank(k)) {
             throw new ParameterInvalidException("key can not be empty!");
         }
-        if (!keyAndSwitcher.containsKey(k)) {
+        if (!this.keyAndSwitcher.containsKey(k)) {
             throw new KeyNotFoundException(String.format("key = %s can't find!", k));
         }
-        keyAndSwitcher.get(k).setOpen(false);
+        this.keyAndSwitcher.get(k).setOpen(false);
     }
 
     /**
@@ -168,15 +168,15 @@ public class SwitcherServiceImpl implements SwitcherService {
         if (StringUtils.isBlank(k)) {
             throw new ParameterInvalidException("key can not be empty!");
         }
-        if (!keyAndSwitcher.containsKey(k)) {
+        if (!this.keyAndSwitcher.containsKey(k)) {
             throw new KeyNotFoundException(String.format("key = %s can't find!", k));
         }
-        keyAndSwitcher.get(k).setOpen(open);
+        this.keyAndSwitcher.get(k).setOpen(open);
         Switcher switcher = getSwitcherByKey(k);
         if (switcher != null) {
-            switcherDAO.changeStatusByKey(k, !open, open);
+            this.switcherDAO.changeStatusByKey(k, !open, open);
         } else {
-            switcherDAO.insert(keyAndSwitcher.get(k)); // resolve repeated insertion problems by using key as a unique index
+            this.switcherDAO.insert(this.keyAndSwitcher.get(k)); // resolve repeated insertion problems by using key as a unique index
         }
     }
 
@@ -192,13 +192,13 @@ public class SwitcherServiceImpl implements SwitcherService {
     }
 
     /**
-     * 
+     *
      * @param key
-     * @return 
+     * @return
      */
     public Switcher getSwitcherByKey(String key) {
         if (StringUtils.isNotEmpty(key)) {
-            return switcherDAO.selectByKey(key);
+            return this.switcherDAO.selectByKey(key);
         }
         return null;
     }

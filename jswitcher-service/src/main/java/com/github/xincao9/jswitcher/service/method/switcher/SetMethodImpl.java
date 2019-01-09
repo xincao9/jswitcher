@@ -44,7 +44,7 @@ public class SetMethodImpl implements SyncMethod<Void> {
     @Override
     public Void exec(Request request) {
         List<Object> params = request.getParams();
-        switcherService.set((String) params.get(0), (Boolean) params.get(1));
+        this.switcherService.set((String) params.get(0), (Boolean) params.get(1));
         return null;
     }
 

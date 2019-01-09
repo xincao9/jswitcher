@@ -28,13 +28,30 @@ import org.slf4j.LoggerFactory;
 public class Configure {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Configure.class);
-    private final int port;
-    private final String databaseName;
-    private final String databaseUser;
-    private final String databasePass;
-    private final String databaseHost;
-    private final int databasePort;
-    private final String databaseOpts;
+    private int port;
+    private String databaseName;
+    private String databaseUser;
+    private String databasePass;
+    private String databaseHost;
+    private int databasePort;
+    private String databaseOpts;
+
+    public Configure(Properties properties) {
+        init(properties);
+    }
+
+    private void init(Properties properties) {
+        properties.entrySet().forEach((entry) -> {
+            LOGGER.info("configure key = {}, value = {}", entry.getKey(), entry.getValue());
+        });
+        this.port = Integer.valueOf(properties.getProperty("switcher.port", "12306"));
+        this.databaseName = properties.getProperty("switcher.database.name", "switcher");
+        this.databaseUser = properties.getProperty("switcher.database.user", "root");
+        this.databasePass = properties.getProperty("switcher.database.pass", "");
+        this.databaseHost = properties.getProperty("switcher.database.host", "127.0.0.1");
+        this.databasePort = Integer.valueOf(properties.getProperty("switcher.database.port", "3306"));
+        this.databaseOpts = properties.getProperty("switcher.database.opts", "useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&autoReconnect=true");
+    }
 
     /**
      *
@@ -47,16 +64,7 @@ public class Configure {
         } catch (IOException ioe) {
             throw new FileNotFoundException(String.format("%s the file cannot be found in the root of the class", filename), ioe);
         }
-        properties.entrySet().forEach((entry) -> {
-            LOGGER.info("configure key = {}, value = {}", entry.getKey(), entry.getValue());
-        });
-        this.port = Integer.valueOf(properties.getProperty("switcher.port", "12306"));
-        this.databaseName = properties.getProperty("switcher.database.name", "switcher");
-        this.databaseUser = properties.getProperty("switcher.database.user", "root");
-        this.databasePass = properties.getProperty("switcher.database.pass", "");
-        this.databaseHost = properties.getProperty("switcher.database.host", "127.0.0.1");
-        this.databasePort = Integer.valueOf(properties.getProperty("switcher.database.port", "3306"));
-        this.databaseOpts = properties.getProperty("switcher.database.opts", "useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&autoReconnect=true");
+        init(properties);
     }
 
     /**

@@ -25,6 +25,7 @@ import com.github.xincao9.jswitcher.service.method.switcher.OffMethodImpl;
 import com.github.xincao9.jswitcher.service.method.switcher.OnMethodImpl;
 import com.github.xincao9.jswitcher.service.method.switcher.SetMethodImpl;
 import com.github.xincao9.jswitcher.service.service.SwitcherServiceImpl;
+import java.util.Properties;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,28 +49,38 @@ public class SwitcherServer {
         this(DEFAULT_CONFIG_FILE);
     }
 
+    public SwitcherServer(Properties properties) {
+        LOGGER.warn("switcher-server turning on！");
+        this.configure = new Configure(properties);
+        init();
+    }
+
     /**
      *
      * @param filename
      */
     public SwitcherServer(String filename) {
         LOGGER.warn("switcher-server turning on！");
-        configure = new Configure(filename);
-        SwitcherDAO switcherDAO = new SwitcherDAO(configure);
-        switcherService = new SwitcherServiceImpl(configure, switcherDAO);
-        CheckMethodImpl checkMethodImpl = new CheckMethodImpl(switcherService);
-        OnMethodImpl onMethodImpl = new OnMethodImpl(switcherService);
-        OffMethodImpl offMethodImpl = new OffMethodImpl(switcherService);
-        SetMethodImpl setMethodImpl = new SetMethodImpl(switcherService);
-        ListMethodImpl listMethodImpl = new ListMethodImpl(switcherService);
+        this.configure = new Configure(filename);
+        init();
+    }
+
+    private void init() {
+        SwitcherDAO switcherDAO = new SwitcherDAO(this.configure);
+        this.switcherService = new SwitcherServiceImpl(this.configure, switcherDAO);
+        CheckMethodImpl checkMethodImpl = new CheckMethodImpl(this.switcherService);
+        OnMethodImpl onMethodImpl = new OnMethodImpl(this.switcherService);
+        OffMethodImpl offMethodImpl = new OffMethodImpl(this.switcherService);
+        SetMethodImpl setMethodImpl = new SetMethodImpl(this.switcherService);
+        ListMethodImpl listMethodImpl = new ListMethodImpl(this.switcherService);
         try {
-            jsonRPCServer = JsonRPCServer.defaultJsonRPCServer(configure.getPort(), 1, 1);
-            jsonRPCServer.register(checkMethodImpl);
-            jsonRPCServer.register(onMethodImpl);
-            jsonRPCServer.register(offMethodImpl);
-            jsonRPCServer.register(setMethodImpl);
-            jsonRPCServer.register(listMethodImpl);
-            jsonRPCServer.start();
+            this.jsonRPCServer = JsonRPCServer.defaultJsonRPCServer(this.configure.getPort(), 1, 1);
+            this.jsonRPCServer.register(checkMethodImpl);
+            this.jsonRPCServer.register(onMethodImpl);
+            this.jsonRPCServer.register(offMethodImpl);
+            this.jsonRPCServer.register(setMethodImpl);
+            this.jsonRPCServer.register(listMethodImpl);
+            this.jsonRPCServer.start();
         } catch (Throwable e) {
             throw new SwitcherServerException("JsonRPCServer abnormal", e);
         }
@@ -85,11 +96,11 @@ public class SwitcherServer {
      *
      */
     public void close() {
-        if (jsonRPCServer != null) {
+        if (this.jsonRPCServer != null) {
             try {
                 LOGGER.warn("switcher-server closing！");
-                jsonRPCServer.shutdown();
-                jsonRPCServer = null;
+                this.jsonRPCServer.shutdown();
+                this.jsonRPCServer = null;
             } catch (Throwable e) {
                 throw new SwitcherServerException("JsonRPCServer abnormal", e);
             }
@@ -101,7 +112,7 @@ public class SwitcherServer {
      * @return
      */
     public Configure getConfigure() {
-        return configure;
+        return this.configure;
     }
 
     /**

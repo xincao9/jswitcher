@@ -44,7 +44,7 @@ public class OffMethodImpl implements SyncMethod<Void> {
     @Override
     public Void exec(Request request) {
         List<Object> params = request.getParams();
-        switcherService.off((String) params.get(0));
+        this.switcherService.off((String) params.get(0));
         return null;
     }
 

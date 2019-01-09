@@ -44,7 +44,7 @@ public class OnMethodImpl implements SyncMethod<Void> {
     @Override
     public Void exec(Request request) {
         List<Object> params = request.getParams();
-        switcherService.on((String) params.get(0));
+        this.switcherService.on((String) params.get(0));
         return null;
     }
 
