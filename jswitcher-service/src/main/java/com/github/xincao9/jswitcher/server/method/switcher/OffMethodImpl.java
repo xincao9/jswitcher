@@ -28,10 +28,19 @@ public class OffMethodImpl implements SyncMethod<Void> {
 
     private final SwitcherService switcherService;
 
+    /**
+     * 
+     * @param switcherService 
+     */
     public OffMethodImpl(SwitcherService switcherService) {
         this.switcherService = switcherService;
     }
 
+    /**
+     * 
+     * @param request
+     * @return 
+     */
     @Override
     public Void exec(Request request) {
         List<Object> params = request.getParams();
@@ -39,6 +48,10 @@ public class OffMethodImpl implements SyncMethod<Void> {
         return null;
     }
 
+    /**
+     * 
+     * @return 
+     */
     @Override
     public String getName() {
         return "off";

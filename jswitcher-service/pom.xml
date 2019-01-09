@@ -11,8 +11,10 @@
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <logback.version>1.2.3</logback.version>
+        <jswitcher-api>1.0</jswitcher-api>
+        <jsonrpc.version>1.0</jsonrpc.version>
         <slf4j.version>1.7.25</slf4j.version>
+        <logback.version>1.2.3</logback.version>
         <mysql.version>5.1.44</mysql.version>
         <junit.version>4.12</junit.version>
     </properties>
@@ -20,12 +22,12 @@
         <dependency>
             <groupId>com.github.xincao9</groupId>
             <artifactId>jswitcher-api</artifactId>
-            <version>1.0</version>
+            <version>${jsonrpc.version}</version>
         </dependency>
         <dependency>
             <groupId>com.github.xincao9</groupId>
             <artifactId>jsonrpc</artifactId>
-            <version>1.0</version>
+            <version>${jsonrpc.version}</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>

@@ -50,21 +50,8 @@ public class SwitcherServerTest {
     }
 
     /**
-     * Test of close method, of class SwitcherServer.
-     */
-    @Test
-    public void testClose() {
-    }
-
-    /**
-     * Test of getConfigure method, of class SwitcherServer.
-     */
-    @Test
-    public void testGetConfigure() {
-    }
-
-    /**
      * Test of getSwitcherService method, of class SwitcherServer.
+     *
      * @throws java.io.IOException
      */
     @Test

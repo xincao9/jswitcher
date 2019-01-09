@@ -29,15 +29,28 @@ public class ListMethodImpl implements SyncMethod<List<Switcher>> {
 
     private final SwitcherService switcherService;
 
+    /**
+     * 
+     * @param switcherService 
+     */
     public ListMethodImpl(SwitcherService switcherService) {
         this.switcherService = switcherService;
     }
 
+    /**
+     * 
+     * @param request
+     * @return 
+     */
     @Override
     public List<Switcher> exec(Request request) {
         return this.switcherService.list();
     }
 
+    /**
+     * 
+     * @return 
+     */
     @Override
     public String getName() {
         return "list";

@@ -46,7 +46,7 @@ public class SwitcherServer {
     }
 
     public SwitcherServer(String filename) {
-        LOGGER.warn("switcher-server 正在启动！");
+        LOGGER.warn("switcher-server turning on！");
         configure = new Configure(filename);
         SwitcherDAO switcherDAO = new SwitcherDAO(configure);
         switcherService = new SwitcherServiceImpl(configure, switcherDAO);
@@ -56,7 +56,7 @@ public class SwitcherServer {
         SetMethodImpl setMethodImpl = new SetMethodImpl(switcherService);
         ListMethodImpl listMethodImpl = new ListMethodImpl(switcherService);
         try {
-            jsonRPCServer = JsonRPCServer.defaultJsonRPCServer(configure.getListenPort(), 1, 1);
+            jsonRPCServer = JsonRPCServer.defaultJsonRPCServer(configure.getPort(), 1, 1);
             jsonRPCServer.register(checkMethodImpl);
             jsonRPCServer.register(onMethodImpl);
             jsonRPCServer.register(offMethodImpl);
@@ -64,7 +64,7 @@ public class SwitcherServer {
             jsonRPCServer.register(listMethodImpl);
             jsonRPCServer.start();
         } catch (Throwable e) {
-            throw new SwitcherServerException("JsonRPCServer 异常", e);
+            throw new SwitcherServerException("JsonRPCServer abnormal", e);
         }
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
@@ -77,11 +77,11 @@ public class SwitcherServer {
     public void close() {
         if (jsonRPCServer != null) {
             try {
-                LOGGER.warn("switcher-server 正在关闭！");
+                LOGGER.warn("switcher-server closing！");
                 jsonRPCServer.shutdown();
                 jsonRPCServer = null;
             } catch (Throwable e) {
-                throw new SwitcherServerException("JsonRPCServer 异常", e);
+                throw new SwitcherServerException("JsonRPCServer abnormal", e);
             }
         }
     }

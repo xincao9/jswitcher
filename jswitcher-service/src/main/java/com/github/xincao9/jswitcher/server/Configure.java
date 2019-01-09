@@ -28,8 +28,7 @@ import org.slf4j.LoggerFactory;
 public class Configure {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Configure.class);
-    private final String listenIp;
-    private final int listenPort;
+    private final int port;
     private final String databaseName;
     private final String databaseUser;
     private final String databasePass;
@@ -42,13 +41,12 @@ public class Configure {
         try {
             properties.load(Configure.class.getResourceAsStream(filename));
         } catch (IOException ioe) {
-            throw new FileNotFoundException(String.format("%s 文件在类根目录下不能找到", filename), ioe);
+            throw new FileNotFoundException(String.format("%s the file cannot be found in the root of the class", filename), ioe);
         }
         properties.entrySet().forEach((entry) -> {
             LOGGER.info("configure key = {}, value = {}", entry.getKey(), entry.getValue());
         });
-        this.listenIp = properties.getProperty("switcher.listen.ip", "127.0.0.1");
-        this.listenPort = Integer.valueOf(properties.getProperty("switcher.listen.port", "12306"));
+        this.port = Integer.valueOf(properties.getProperty("switcher.port", "12306"));
         this.databaseName = properties.getProperty("switcher.database.name", "switcher");
         this.databaseUser = properties.getProperty("switcher.database.user", "root");
         this.databasePass = properties.getProperty("switcher.database.pass", "");
@@ -57,36 +55,32 @@ public class Configure {
         this.databaseOpts = properties.getProperty("switcher.database.opts", "useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&autoReconnect=true");
     }
 
-    public String getListenIp() {
-        return listenIp;
-    }
-
-    public int getListenPort() {
-        return listenPort;
+    public int getPort() {
+        return this.port;
     }
 
     public String getDatabaseName() {
-        return databaseName;
+        return this.databaseName;
     }
 
     public String getDatabaseUser() {
-        return databaseUser;
+        return this.databaseUser;
     }
 
     public String getDatabasePass() {
-        return databasePass;
+        return this.databasePass;
     }
 
     public String getDatabaseHost() {
-        return databaseHost;
+        return this.databaseHost;
     }
 
     public int getDatabasePort() {
-        return databasePort;
+        return this.databasePort;
     }
 
     public String getDatabaseOpts() {
-        return databaseOpts;
+        return this.databaseOpts;
     }
 
 }

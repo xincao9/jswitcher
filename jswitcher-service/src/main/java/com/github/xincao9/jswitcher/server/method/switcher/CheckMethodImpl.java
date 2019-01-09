@@ -26,18 +26,34 @@ import java.util.List;
  */
 public class CheckMethodImpl implements SyncMethod<Boolean> {
 
+    /**
+     * 
+     */
     private final SwitcherService switcherService;
 
+    /**
+     * 
+     * @param switcherService 
+     */
     public CheckMethodImpl(SwitcherService switcherService) {
         this.switcherService = switcherService;
     }
 
+    /**
+     * 
+     * @param request
+     * @return 
+     */
     @Override
     public Boolean exec(Request request) {
         List<Object> params = request.getParams();
         return switcherService.check((String) params.get(0));
     }
 
+    /**
+     * 
+     * @return 
+     */
     @Override
     public String getName() {
         return "check";
