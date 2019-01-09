@@ -22,11 +22,11 @@ import com.github.xincao9.jswitcher.server.Configure;
 import com.github.xincao9.jswitcher.server.dao.SwitcherDAO;
 import com.github.xincao9.jswitcher.server.exception.KeyNotFoundException;
 import com.github.xincao9.jswitcher.server.exception.ParameterInvalidException;
-import com.github.xincao9.jswitcher.server.util.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -113,7 +113,7 @@ public class SwitcherServiceImpl implements SwitcherService {
     @Override
     public Boolean check(String key) {
         String k = String.valueOf(key);
-        if (StringUtils.isEmpty(k)) {
+        if (StringUtils.isBlank(k)) {
             throw new ParameterInvalidException("key can not be empty!");
         }
         if (!keyAndSwitcher.containsKey(k)) {
@@ -130,7 +130,7 @@ public class SwitcherServiceImpl implements SwitcherService {
     @Override
     public void on(String key) {
         String k = String.valueOf(key);
-        if (StringUtils.isEmpty(k)) {
+        if (StringUtils.isBlank(k)) {
             throw new ParameterInvalidException("key can not be empty!");
         }
         if (!keyAndSwitcher.containsKey(k)) {
@@ -147,7 +147,7 @@ public class SwitcherServiceImpl implements SwitcherService {
     @Override
     public void off(String key) {
         String k = String.valueOf(key);
-        if (StringUtils.isEmpty(k)) {
+        if (StringUtils.isBlank(k)) {
             throw new ParameterInvalidException("key can not be empty!");
         }
         if (!keyAndSwitcher.containsKey(k)) {
@@ -165,7 +165,7 @@ public class SwitcherServiceImpl implements SwitcherService {
     @Override
     public void set(String key, Boolean open) {
         String k = String.valueOf(key);
-        if (StringUtils.isEmpty(k)) {
+        if (StringUtils.isBlank(k)) {
             throw new ParameterInvalidException("key can not be empty!");
         }
         if (!keyAndSwitcher.containsKey(k)) {
