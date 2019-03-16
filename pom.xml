@@ -5,6 +5,8 @@
     <artifactId>jswitcher</artifactId>
     <version>1.0</version>
     <packaging>pom</packaging>
+    <name>jswitcher</name>
+    <description>Applicable to Operation and Maintenance Service Intervention Management Suite</description>
     <modules>
         <module>jswitcher-api</module>
         <module>jswitcher-service</module>
@@ -12,5 +14,17 @@
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
+    <developers>
+        <developer>
+            <email>xincao9@gmail.com</email>
+            <name>xin.cao</name>
+            <roles>
+                <role>onwer</role>
+            </roles>
+            <url>https://github.com/xincao9</url>
+        </developer>
+    </developers>
 </project>

@@ -2,6 +2,8 @@
 
 ### java switcher service
 
+> Applicable to Operation and Maintenance Service Intervention Management Suite
+
 <pre>
 ## create a table of storage switch information
 
