@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 xingyunzhi.
+ * Copyright 2019 xincao9@gmail.com.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,63 +20,72 @@ import com.github.xincao9.jswitcher.api.vo.Switcher;
 import java.util.List;
 
 /**
+ * 开关服务
  *
  * @author xincao9@gmail.com
  */
 public interface SwitcherService {
 
     /**
+     * 检查开关状态（操作和维护使用）
      *
-     * @param key
-     * @return
+     * @param key 键值
+     * @return 开关状态
      */
     Boolean check(String key);
 
     /**
+     * 开关（操作和维护使用）
      *
-     * @param key
+     * @param key 键值
      */
     void on(String key);
 
     /**
+     * 关闭开关（操作和维护使用）
      *
-     * @param key
+     * @param key 键值
      */
     void off(String key);
 
     /**
+     * 设置开关状态并永久保存（操作和维护）
      *
-     * @param key
-     * @param open
+     * @param key 键值
+     * @param open 开关状态
      */
     void set(String key, Boolean open);
 
     /**
+     * 查看开关列表（操作和维护使用）
      *
-     * @return
+     * @return 开关列表
      */
     List<Switcher> list();
 
     /**
+     * 注册开关（开发使用）
      *
-     * @param key
-     * @param open
-     * @param describe
-     * @param qos
+     * @param key 键值
+     * @param open 开关状态
+     * @param describe 描述
+     * @param qos 服务质量
      */
     void register(String key, Boolean open, String describe, QoS qos);
 
     /**
+     * 是开放状态（开发使用）
      *
-     * @param key
-     * @return
+     * @param key 键值
+     * @return 是/否
      */
     Boolean isOpen(String key);
 
     /**
+     * 关闭状态（开发使用）
      *
-     * @param key
-     * @return
+     * @param key 键值
+     * @return 是/否
      */
     Boolean isClose(String key);
 

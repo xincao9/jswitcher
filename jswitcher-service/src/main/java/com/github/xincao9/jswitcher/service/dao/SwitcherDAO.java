@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 xingyunzhi.
+ * Copyright 2019 xincao9@gmail.com.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ package com.github.xincao9.jswitcher.service.dao;
 import com.github.xincao9.jswitcher.api.vo.QoS;
 import com.github.xincao9.jswitcher.api.vo.Switcher;
 import com.github.xincao9.jswitcher.service.Configure;
-import com.github.xincao9.jswitcher.service.exception.SwitcherServerException;
+import com.github.xincao9.jswitcher.api.exception.SwitcherServerException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 开关仓库
  *
  * @author xincao9@gmail.com
  */
@@ -38,8 +39,9 @@ public class SwitcherDAO {
     private static final String SELECT = "select `id`, `key`, `open`, `describe`, `qos` from switcher where `key`=?";
 
     /**
+     * 构造器
      *
-     * @param configure
+     * @param configure 配置
      */
     public SwitcherDAO(Configure configure) {
         try {
@@ -51,9 +53,10 @@ public class SwitcherDAO {
     }
 
     /**
+     * 创建
      *
-     * @param switcher
-     * @return
+     * @param switcher 开关
+     * @return 条数
      */
     public int insert(Switcher switcher) {
         PreparedStatement statement = null;
@@ -79,11 +82,12 @@ public class SwitcherDAO {
     }
 
     /**
+     * 修改开关状态
      *
-     * @param key
-     * @param expected
-     * @param open
-     * @return
+     * @param key 键值
+     * @param expected 期望开关状态
+     * @param open 开关状态
+     * @return 影响条数
      */
     public int changeStatusByKey(String key, boolean expected, boolean open) {
         PreparedStatement statement = null;
@@ -107,9 +111,10 @@ public class SwitcherDAO {
     }
 
     /**
+     * 查询开关
      *
-     * @param key
-     * @return
+     * @param key 键值
+     * @return 开关
      */
     public Switcher selectByKey(String key) {
         List<Switcher> switcheres = null;

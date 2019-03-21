@@ -7,16 +7,17 @@
     <packaging>pom</packaging>
     <name>jswitcher</name>
     <description>Applicable to Operation and Maintenance Service Intervention Management Suite</description>
-    <modules>
-        <module>jswitcher-api</module>
-        <module>jswitcher-service</module>
-        <module>jswitcher-cli</module>
-    </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
+    <modules>
+        <module>jswitcher-api</module>
+        <module>jswitcher-service</module>
+        <module>jswitcher-cli</module>
+    </modules>
+    <url>https://github.com/xincao9/jswitcher</url>
     <developers>
         <developer>
             <email>xincao9@gmail.com</email>
@@ -25,6 +26,99 @@
                 <role>onwer</role>
             </roles>
             <url>https://github.com/xincao9</url>
+            <organization>xincao9</organization>
+            <organizationUrl>https://github.com/xincao9/</organizationUrl>
         </developer>
     </developers>
+    <organization>
+        <name>Personal</name>
+        <url>https://github.com/xincao9</url>
+    </organization>
+    <issueManagement>
+        <system>Github Issues</system>
+        <url>https://github.com/xincao9/jswitcher/issues</url>
+    </issueManagement>
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <scm>
+        <tag>master</tag>
+        <url>git@github.com:xincao9/jswitcher.git</url>
+        <connection>scm:git:git@github.com:xincao9/jswitcher.git</connection>
+        <developerConnection>scm:git:git@github.com:xincao9/jswitcher.git</developerConnection>
+    </scm>
+    <distributionManagement>
+        <repository>
+            <id>sonatype-oss</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+        </repository>
+        <snapshotRepository>
+            <id>sonatype-oss</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+    <profiles>
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <version>1.6.8</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <serverId>sonatype-oss</serverId>
+                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.6</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>3.0.1</version>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>3.1.0</version>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

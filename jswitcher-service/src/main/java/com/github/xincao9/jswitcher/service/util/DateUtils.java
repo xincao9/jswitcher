@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 xingyunzhi.
+ * Copyright 2019 xincao9@gmail.com.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- *
+ * 日期工具类
+ * 
  * @author xincao9@gmail.com
  */
 public class DateUtils {
@@ -32,9 +33,10 @@ public class DateUtils {
     public static final String DATETIME_YYYYMMDD_FORMAT = "yyyyMMdd";
 
     /**
+     * 日期格式化
      * 
-     * @param date
-     * @param pattern
+     * @param date 日期
+     * @param pattern 模版
      * @return 
      */
     public static String format (Date date, String pattern) {
@@ -43,9 +45,10 @@ public class DateUtils {
     }
 
     /**
+     * 日期字符串转日期
      * 
-     * @param date
-     * @param pattern
+     * @param date 日期字符串
+     * @param pattern 模版
      * @return
      * @throws ParseException 
      */

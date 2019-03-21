@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 xingyunzhi.
+ * Copyright 2019 xincao9@gmail.com.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,14 +15,15 @@
  */
 package com.github.xincao9.jswitcher.service;
 
-import com.github.xincao9.jswitcher.service.exception.FileNotFoundException;
+import com.github.xincao9.jswitcher.api.exception.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *
+ * 配置类
+ * 
  * @author xincao9@gmail.com
  */
 public class Configure {
@@ -36,10 +37,20 @@ public class Configure {
     private int databasePort;
     private String databaseOpts;
 
+    /**
+     * 构造器
+     * 
+     * @param properties 属性
+     */
     public Configure(Properties properties) {
         init(properties);
     }
 
+    /**
+     * 初始化
+     * 
+     * @param properties 属性
+     */
     private void init(Properties properties) {
         properties.entrySet().forEach((entry) -> {
             LOGGER.info("configure key = {}, value = {}", entry.getKey(), entry.getValue());
@@ -54,8 +65,9 @@ public class Configure {
     }
 
     /**
-     *
-     * @param filename
+     * 构造器
+     * 
+     * @param filename 文件名
      */
     public Configure(String filename) {
         Properties properties = new Properties();
@@ -68,56 +80,63 @@ public class Configure {
     }
 
     /**
-     *
-     * @return
+     * 获取监听端口
+     * 
+     * @return 监听端口
      */
     public int getPort() {
         return this.port;
     }
 
     /**
-     *
-     * @return
+     * 获取数据库
+     * 
+     * @return 数据库
      */
     public String getDatabaseName() {
         return this.databaseName;
     }
 
     /**
-     *
-     * @return
+     * 获取用户
+     * 
+     * @return 用户
      */
     public String getDatabaseUser() {
         return this.databaseUser;
     }
 
     /**
-     *
-     * @return
+     * 获取密码
+     * 
+     * @return 密码
      */
     public String getDatabasePass() {
         return this.databasePass;
     }
 
     /**
-     *
-     * @return
+     * 获取主机
+     * 
+     * @return 主机
      */
     public String getDatabaseHost() {
         return this.databaseHost;
     }
 
     /**
-     *
-     * @return
+     * 获取端口
+     * 
+     * @return 端口
      */
     public int getDatabasePort() {
         return this.databasePort;
     }
 
     /**
-     *
-     * @return
+     * 获取参数
+     * 
+     * @return 参数
      */
     public String getDatabaseOpts() {
         return this.databaseOpts;

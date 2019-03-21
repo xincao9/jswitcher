@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 xingyunzhi.
+ * Copyright 2019 xincao9@gmail.com.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,40 +15,41 @@
  */
 package com.github.xincao9.jswitcher.service;
 
-import com.github.xincao9.jsonrpc.server.JsonRPCServer;
+import com.github.xincao9.jsonrpc.core.server.JsonRPCServer;
 import com.github.xincao9.jswitcher.api.service.SwitcherService;
 import com.github.xincao9.jswitcher.service.dao.SwitcherDAO;
-import com.github.xincao9.jswitcher.service.exception.SwitcherServerException;
-import com.github.xincao9.jswitcher.service.method.switcher.CheckMethodImpl;
-import com.github.xincao9.jswitcher.service.method.switcher.ListMethodImpl;
-import com.github.xincao9.jswitcher.service.method.switcher.OffMethodImpl;
-import com.github.xincao9.jswitcher.service.method.switcher.OnMethodImpl;
-import com.github.xincao9.jswitcher.service.method.switcher.SetMethodImpl;
+import com.github.xincao9.jswitcher.api.exception.SwitcherServerException;
+import com.github.xincao9.jswitcher.service.constant.ConfigConsts;
 import com.github.xincao9.jswitcher.service.service.SwitcherServiceImpl;
 import java.util.Properties;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *
+ * 开关服务器
+ * 
  * @author xincao9@gmail.com
  */
 public class SwitcherServer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SwitcherServer.class);
-    private static final String DEFAULT_CONFIG_FILE = "/switcher.properties";
     private JsonRPCServer jsonRPCServer;
     private Configure configure;
     private SwitcherServiceImpl switcherService;
 
     /**
-     *
+     * 构造器
+     * 
      */
     public SwitcherServer() {
-        this(DEFAULT_CONFIG_FILE);
+        this(ConfigConsts.DEFAULT_CONFIG_FILE);
     }
 
+    /**
+     *  构造器
+     * 
+     * @param properties 配置属性
+     */
     public SwitcherServer(Properties properties) {
         LOGGER.warn("switcher-server turning on！");
         this.configure = new Configure(properties);
@@ -56,8 +57,9 @@ public class SwitcherServer {
     }
 
     /**
-     *
-     * @param filename
+     * 构造器
+     * 
+     * @param filename 配置文件
      */
     public SwitcherServer(String filename) {
         LOGGER.warn("switcher-server turning on！");
@@ -65,21 +67,16 @@ public class SwitcherServer {
         init();
     }
 
+    /**
+     * 初始化方法
+     * 
+     */
     private void init() {
         SwitcherDAO switcherDAO = new SwitcherDAO(this.configure);
         this.switcherService = new SwitcherServiceImpl(this.configure, switcherDAO);
-        CheckMethodImpl checkMethodImpl = new CheckMethodImpl(this.switcherService);
-        OnMethodImpl onMethodImpl = new OnMethodImpl(this.switcherService);
-        OffMethodImpl offMethodImpl = new OffMethodImpl(this.switcherService);
-        SetMethodImpl setMethodImpl = new SetMethodImpl(this.switcherService);
-        ListMethodImpl listMethodImpl = new ListMethodImpl(this.switcherService);
         try {
-            this.jsonRPCServer = JsonRPCServer.defaultJsonRPCServer(this.configure.getPort(), 1, 1);
-            this.jsonRPCServer.register(checkMethodImpl);
-            this.jsonRPCServer.register(onMethodImpl);
-            this.jsonRPCServer.register(offMethodImpl);
-            this.jsonRPCServer.register(setMethodImpl);
-            this.jsonRPCServer.register(listMethodImpl);
+            this.jsonRPCServer = JsonRPCServer.defaultJsonRPCServer(ConfigConsts.DEFAULT_CONFIG_FILE);
+            this.jsonRPCServer.register(new SwitcherServiceImpl(configure, switcherDAO));
             this.jsonRPCServer.start();
         } catch (Throwable e) {
             throw new SwitcherServerException("JsonRPCServer abnormal", e);
@@ -93,7 +90,8 @@ public class SwitcherServer {
     }
 
     /**
-     *
+     * 关闭
+     * 
      */
     public void close() {
         if (this.jsonRPCServer != null) {
@@ -108,7 +106,8 @@ public class SwitcherServer {
     }
 
     /**
-     *
+     * 配置
+     * 
      * @return
      */
     public Configure getConfigure() {
@@ -116,7 +115,8 @@ public class SwitcherServer {
     }
 
     /**
-     *
+     * 开关服务
+     * 
      * @return
      */
     public SwitcherService getSwitcherService() {

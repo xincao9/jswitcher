@@ -9,10 +9,8 @@
     <artifactId>jswitcher-cli</artifactId>
     <packaging>jar</packaging>
     <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <jswitcher-api.version>1.0</jswitcher-api.version>
-        <jsonrpc.version>1.0</jsonrpc.version>
+        <jswitcher.api.version>1.0</jswitcher.api.version>
+        <jsonrpc.version>1.2</jsonrpc.version>
         <jline.version>3.9.0</jline.version>
         <logback.version>1.2.3</logback.version>
     </properties>
@@ -20,11 +18,11 @@
         <dependency>
             <groupId>com.github.xincao9</groupId>
             <artifactId>jswitcher-api</artifactId>
-            <version>${jswitcher-api.version}</version>
+            <version>${jswitcher.api.version}</version>
         </dependency>
         <dependency>
             <groupId>com.github.xincao9</groupId>
-            <artifactId>jsonrpc</artifactId>
+            <artifactId>jsonrpc-core</artifactId>
             <version>${jsonrpc.version}</version>
         </dependency>
         <dependency>

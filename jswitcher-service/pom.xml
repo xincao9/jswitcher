@@ -7,14 +7,12 @@
         <version>1.0</version>
     </parent>
     <artifactId>jswitcher-service</artifactId>
+    <name>jswitcher-service</name>
     <packaging>jar</packaging>
     <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <jswitcher-api>1.0</jswitcher-api>
-        <jsonrpc.version>1.0</jsonrpc.version>
+        <jswitcher.api>1.0</jswitcher.api>
+        <jsonrpc.version>1.2</jsonrpc.version>
         <slf4j.version>1.7.25</slf4j.version>
-        <logback.version>1.2.3</logback.version>
         <mysql.version>5.1.44</mysql.version>
         <junit.version>4.12</junit.version>
     </properties>
@@ -22,11 +20,11 @@
         <dependency>
             <groupId>com.github.xincao9</groupId>
             <artifactId>jswitcher-api</artifactId>
-            <version>${jsonrpc.version}</version>
+            <version>${jswitcher.api}</version>
         </dependency>
         <dependency>
             <groupId>com.github.xincao9</groupId>
-            <artifactId>jsonrpc</artifactId>
+            <artifactId>jsonrpc-core</artifactId>
             <version>${jsonrpc.version}</version>
         </dependency>
         <dependency>
@@ -48,12 +46,6 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>${slf4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>${logback.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 xingyunzhi.
+ * Copyright 2019 xincao9@gmail.com.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,23 +13,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.xincao9.jswitcher.service.exception;
+package com.github.xincao9.jswitcher.api.exception;
 
 /**
+ * 开关服务器异常
  *
  * @author xincao9@gmail.com
  */
-public class KeyNotFoundException extends Error {
+public class SwitcherServerException extends Error {
 
-    public KeyNotFoundException(String message) {
+    /**
+     * 构造器
+     *
+     * @param message 消息
+     */
+    public SwitcherServerException(String message) {
         super(message);
     }
 
-    public KeyNotFoundException(String message, Throwable cause) {
+    /**
+     * 构造器
+     *
+     * @param message 消息
+     * @param cause 异常
+     */
+    public SwitcherServerException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public KeyNotFoundException(Throwable cause) {
+    /**
+     * 构造器
+     *
+     * @param cause 异常
+     */
+    public SwitcherServerException(Throwable cause) {
         super(cause);
     }
 

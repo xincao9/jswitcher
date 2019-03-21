@@ -13,16 +13,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.xincao9.jswitcher.api.vo;
+package com.github.xincao9.jswitcher.api.exception;
 
 /**
- * 服务质量
- * 
+ *
  * @author xincao9@gmail.com
  */
-public enum QoS {
+public class FileNotFoundException extends Error {
 
-    API, // 接口层
-    SERVICE, // 服务层
-    SYSTEM; // 系统层
+    /**
+     * 构造器
+     * 
+     * @param message 消息
+     */
+    public FileNotFoundException(String message) {
+        super(message);
+    }
+
+    /**
+     * 构造器
+     * 
+     * @param message 消息
+     * @param cause 异常
+     */
+    public FileNotFoundException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    /**
+     * 构造器
+     * 
+     * @param cause 异常
+     */
+    public FileNotFoundException(Throwable cause) {
+        super(cause);
+    }
+
 }

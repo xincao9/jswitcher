@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 xingyunzhi.
+ * Copyright 2019 xincao9@gmail.com.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,8 +20,8 @@ import com.github.xincao9.jswitcher.api.vo.QoS;
 import com.github.xincao9.jswitcher.api.vo.Switcher;
 import com.github.xincao9.jswitcher.service.Configure;
 import com.github.xincao9.jswitcher.service.dao.SwitcherDAO;
-import com.github.xincao9.jswitcher.service.exception.KeyNotFoundException;
-import com.github.xincao9.jswitcher.service.exception.ParameterInvalidException;
+import com.github.xincao9.jswitcher.api.exception.KeyNotFoundException;
+import com.github.xincao9.jswitcher.api.exception.ParameterInvalidException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +31,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * 开关服务
  *
  * @author xincao9@gmail.com
  */
@@ -42,18 +43,24 @@ public class SwitcherServiceImpl implements SwitcherService {
     private final SwitcherDAO switcherDAO;
     private final Configure configre;
 
+    /**
+     * 构造器
+     *
+     * @param configre 配置
+     * @param switcherDAO 开关仓库
+     */
     public SwitcherServiceImpl(Configure configre, SwitcherDAO switcherDAO) {
         this.configre = configre;
         this.switcherDAO = switcherDAO;
     }
 
     /**
-     * registration switch (development use)
+     * 注册开关（开发使用）
      *
-     * @param key
-     * @param open
-     * @param describe
-     * @param qos
+     * @param key 键值
+     * @param open 开关状态
+     * @param describe 描述
+     * @param qos 服务质量
      */
     @Override
     public void register(String key, Boolean open, String describe, QoS qos) {
@@ -78,10 +85,10 @@ public class SwitcherServiceImpl implements SwitcherService {
     }
 
     /**
-     * is open state (development use)
+     * 是开放状态（开发使用）
      *
-     * @param key
-     * @return
+     * @param key 键值
+     * @return 是/否
      */
     @Override
     public Boolean isOpen(String key) {
@@ -94,10 +101,10 @@ public class SwitcherServiceImpl implements SwitcherService {
     }
 
     /**
-     * is off state (development use)
+     * 关闭状态（开发使用）
      *
-     * @param key
-     * @return
+     * @param key 键值
+     * @return 是/否
      */
     @Override
     public Boolean isClose(String key) {
@@ -105,10 +112,10 @@ public class SwitcherServiceImpl implements SwitcherService {
     }
 
     /**
-     * check switch status (operation and maintenance use)
+     * 检查开关状态（操作和维护使用）
      *
-     * @param key
-     * @return
+     * @param key 键值
+     * @return 开关状态
      */
     @Override
     public Boolean check(String key) {
@@ -123,9 +130,9 @@ public class SwitcherServiceImpl implements SwitcherService {
     }
 
     /**
-     * open switch (operation and maintenance use)
+     * 开关（操作和维护使用）
      *
-     * @param key
+     * @param key 键值
      */
     @Override
     public void on(String key) {
@@ -140,9 +147,9 @@ public class SwitcherServiceImpl implements SwitcherService {
     }
 
     /**
-     * close switch (operation and maintenance use)
+     * 关闭开关（操作和维护使用）
      *
-     * @param key
+     * @param key 键值
      */
     @Override
     public void off(String key) {
@@ -157,10 +164,10 @@ public class SwitcherServiceImpl implements SwitcherService {
     }
 
     /**
-     * set the switch state and save it permanently (Operation and maintenance)
+     * 设置开关状态并永久保存（操作和维护）
      *
-     * @param key
-     * @param open
+     * @param key 键值
+     * @param open 开关状态
      */
     @Override
     public void set(String key, Boolean open) {
@@ -181,9 +188,9 @@ public class SwitcherServiceImpl implements SwitcherService {
     }
 
     /**
-     * view switch list (operation and maintenance use)
+     * 查看开关列表（操作和维护使用）
      *
-     * @return
+     * @return 开关列表
      */
     @Override
     public List<Switcher> list() {
@@ -192,9 +199,10 @@ public class SwitcherServiceImpl implements SwitcherService {
     }
 
     /**
+     * 获取开关
      *
-     * @param key
-     * @return
+     * @param key 键值
+     * @return 开关
      */
     public Switcher getSwitcherByKey(String key) {
         if (StringUtils.isNotEmpty(key)) {
