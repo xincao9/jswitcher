@@ -26,7 +26,7 @@ import org.junit.Test;
 
 /**
  * 开关服务器测试用例
- * 
+ *
  * @author xincao9@gmail.com
  */
 public class SwitcherServerTest {

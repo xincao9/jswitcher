@@ -1,10 +1,12 @@
-# jswitcher
+## jswitcher
 
 ### java switcher service
 
-> Applicable to Operation and Maintenance Service Intervention Management Suite
+Applicable to Operation and Maintenance Service Intervention Management Suite
 
-<pre>
+**_Create a table structure_**
+
+```
 ## create a table of storage switch information
 
 CREATE TABLE `switcher` (
@@ -17,50 +19,49 @@ CREATE TABLE `switcher` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `key` (`key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-</pre>
 
-<pre>
-## add dependency to pom.xml file
+```
 
-com.github.xincao9:jswitcher-api:1.0
-</pre>
+**_Maven dependency_**
 
-<pre>
-## switcher.properties file is placed in the root of the classpath
+```
+<dependency>
+    <groupId>com.github.xincao9</groupId>
+    <artifactId>jswitcher-core</artifactId>
+    <version>1.2</version>
+</dependency>
+```
 
-switcher.port=12306 // listening port
-switcher.database.name=switcher // switch data is stored by default to mysql
-switcher.database.user=root
-switcher.database.pass=
-switcher.database.host=127.0.0.1
-switcher.database.port=3306
+**_jswitcher.properties_**
 
-</pre>
+```
+jswitcher.port=12306
+jswitcher.database.name=switcher
+jswitcher.database.user=root
+jswitcher.database.pass=
+jswitcher.database.host=127.0.0.1
+jswitcher.database.port=3306
+jswitcher.database.opts=useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&autoReconnect=true
+```
 
-<pre>
-## Sample code
+**_Sample_**
 
+```
 public class Sample {
 
     public static void main() throws IOException {
         SwitcherServer switcherServer = new SwitcherServer();
         SwitcherService switcherService = switcherServer.getSwitcherService();
-        switcherService.register("key", Boolean.TRUE, "for testing", QoS.API);
+        switcherService.register("key", Boolean.TRUE, "用于测试", QoS.API);
         if (switcherService.isOpen("key")) {
-            System.out.println("key open state");
+            System.out.println("key open status");
         } else {
-            System.out.println("key closed state");
+            System.out.println("key closed status");
         }
-        System.in.read();
-        if (switcherService.isOpen("key")) {
-            System.out.println("key open state");
-        } else {
-            System.out.println("key closed state");
-        }
+        switcherService.set("key", Boolean.FALSE);
         System.in.read();
         switcherServer.close();
     }
 
 }
-
-</pre>
+```
