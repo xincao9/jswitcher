@@ -16,7 +16,8 @@
 package com.github.xincao9.jswitcher.api.exception;
 
 /**
- *
+ * 文件没有找到异常
+ * 
  * @author xincao9@gmail.com
  */
 public class FileNotFoundException extends Error {

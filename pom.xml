@@ -14,8 +14,8 @@
     </properties>
     <modules>
         <module>jswitcher-api</module>
-        <module>jswitcher-service</module>
         <module>jswitcher-cli</module>
+        <module>jswitcher-core</module>
     </modules>
     <url>https://github.com/xincao9/jswitcher</url>
     <developers>

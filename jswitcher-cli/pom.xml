@@ -10,7 +10,7 @@
     <packaging>jar</packaging>
     <properties>
         <jswitcher.api.version>1.0</jswitcher.api.version>
-        <jsonrpc.version>1.2</jsonrpc.version>
+        <jsonrpc.core.version>1.2</jsonrpc.core.version>
         <jline.version>3.9.0</jline.version>
         <logback.version>1.2.3</logback.version>
     </properties>
@@ -23,7 +23,7 @@
         <dependency>
             <groupId>com.github.xincao9</groupId>
             <artifactId>jsonrpc-core</artifactId>
-            <version>${jsonrpc.version}</version>
+            <version>${jsonrpc.core.version}</version>
         </dependency>
         <dependency>
             <groupId>org.jline</groupId>
