@@ -7,6 +7,7 @@
         <version>1.0</version>
     </parent>
     <artifactId>jswitcher-cli</artifactId>
+    <name>jswitcher-cli</name>
     <packaging>jar</packaging>
     <properties>
         <jswitcher.api.version>1.0</jswitcher.api.version>

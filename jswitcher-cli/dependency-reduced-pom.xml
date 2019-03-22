@@ -32,10 +32,8 @@
   </build>
   <properties>
     <logback.version>1.2.3</logback.version>
-    <jswitcher-api.version>1.0</jswitcher-api.version>
     <jline.version>3.9.0</jline.version>
-    <jsonrpc.version>1.0</jsonrpc.version>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
+    <jswitcher.api.version>1.0</jswitcher.api.version>
+    <jsonrpc.core.version>1.2</jsonrpc.core.version>
   </properties>
 </project>
