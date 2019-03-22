@@ -11,18 +11,13 @@
     <packaging>jar</packaging>
     <properties>
         <jswitcher.api.version>1.0</jswitcher.api.version>
-        <jsonrpc.core.version>1.2</jsonrpc.core.version>
+        <jsonrpc.core.version>1.2.1</jsonrpc.core.version>
         <slf4j.version>1.7.25</slf4j.version>
         <mysql.version>5.1.44</mysql.version>
         <junit.version>4.12</junit.version>
     </properties>
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>com.github.xincao9</groupId>
-                <artifactId>jswitcher-api</artifactId>
-                <version>${jswitcher.api.version}</version>
-            </dependency>
             <dependency>
                 <groupId>com.github.xincao9</groupId>
                 <artifactId>jsonrpc-core</artifactId>

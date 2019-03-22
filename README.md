@@ -28,7 +28,7 @@ CREATE TABLE `switcher` (
 <dependency>
     <groupId>com.github.xincao9</groupId>
     <artifactId>jswitcher-core</artifactId>
-    <version>1.2</version>
+    <version>1.0</version>
 </dependency>
 ```
 

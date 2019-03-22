@@ -12,10 +12,24 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.github.xincao9</groupId>
+                <artifactId>jswitcher-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.xincao9</groupId>
+                <artifactId>jswitcher-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     <modules>
         <module>jswitcher-api</module>
-        <module>jswitcher-cli</module>
         <module>jswitcher-core</module>
+        <module>jswitcher-ui</module>
     </modules>
     <url>https://github.com/xincao9/jswitcher</url>
     <developers>
