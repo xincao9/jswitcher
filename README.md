@@ -52,7 +52,7 @@ public class Sample {
     public static void main() throws IOException {
         SwitcherServer switcherServer = new SwitcherServer();
         SwitcherService switcherService = switcherServer.getSwitcherService();
-        switcherService.register("key", Boolean.TRUE, "用于测试", QoS.API);
+        switcherService.register("key", Boolean.TRUE, "used test", QoS.API);
         if (switcherService.isOpen("key")) {
             System.out.println("key open status");
         } else {
