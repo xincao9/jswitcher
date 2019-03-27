@@ -10,19 +10,12 @@
     <name>jswitcher-core</name>
     <packaging>jar</packaging>
     <properties>
-        <jswitcher.api.version>1.0</jswitcher.api.version>
-        <jsonrpc.core.version>1.2.1</jsonrpc.core.version>
         <slf4j.version>1.7.25</slf4j.version>
         <mysql.version>5.1.44</mysql.version>
         <junit.version>4.12</junit.version>
     </properties>
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>com.github.xincao9</groupId>
-                <artifactId>jsonrpc-core</artifactId>
-                <version>${jsonrpc.core.version}</version>
-            </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>jcl-over-slf4j</artifactId>
@@ -84,6 +77,32 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-recipes</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-framework</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.zookeeper</groupId>
+            <artifactId>zookeeper</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

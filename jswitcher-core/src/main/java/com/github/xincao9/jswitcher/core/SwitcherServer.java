@@ -15,13 +15,14 @@
  */
 package com.github.xincao9.jswitcher.core;
 
+import com.github.xincao9.jsonrpc.core.JsonRPCServer;
 import com.github.xincao9.jswitcher.core.config.Configure;
-import com.github.xincao9.jsonrpc.core.server.JsonRPCServer;
 import com.github.xincao9.jswitcher.api.service.SwitcherService;
 import com.github.xincao9.jswitcher.core.dao.SwitcherDAO;
 import com.github.xincao9.jswitcher.api.exception.SwitcherServerException;
 import com.github.xincao9.jswitcher.core.constant.ConfigConsts;
 import com.github.xincao9.jswitcher.core.service.SwitcherServiceImpl;
+import com.github.xincao9.jswitcher.core.service.ZKDiscoveryServiceImpl;
 import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -75,7 +76,7 @@ public class SwitcherServer {
         SwitcherDAO switcherDAO = new SwitcherDAO();
         this.switcherService = new SwitcherServiceImpl(switcherDAO);
         try {
-            this.jsonRPCServer = JsonRPCServer.defaultJsonRPCServer(ConfigConsts.DEFAULT_CONFIG_FILE);
+            this.jsonRPCServer = JsonRPCServer.defaultJsonRPCServer(ConfigConsts.DEFAULT_CONFIG_FILE, new ZKDiscoveryServiceImpl(Configure.zookeeper));
             this.jsonRPCServer.register(this.switcherService);
             this.jsonRPCServer.start();
         } catch (Throwable e) {

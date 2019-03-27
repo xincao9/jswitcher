@@ -38,5 +38,7 @@ public class ConfigConsts {
     public static final String DEFAULT_JWITCHER_DATABASE_PORT = "3306";
     public static final String JWITCHER_DATABASE_OPTS = "jswitcher.database.opts";
     public static final String DEFAULT_JWITCHER_DATABASE_OPTS = "useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&autoReconnect=true";
+    public static final String JWITCHER_DISCOVERY_ZOOKEEPER = "jswitcher.discovery.zookeeper";
+    public static final String DEFAULT_JWITCHER_DISCOVERY_ZOOKEEPER = "localhost:2181";
 
 }

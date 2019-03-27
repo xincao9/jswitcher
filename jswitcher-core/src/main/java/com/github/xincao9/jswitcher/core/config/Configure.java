@@ -30,13 +30,13 @@ import org.slf4j.LoggerFactory;
 public class Configure {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Configure.class);
-    public static Integer port;
     public static String databaseName;
     public static String databaseUser;
     public static String databasePass;
     public static String databaseHost;
     public static Integer databasePort;
     public static String databaseOpts;
+    public static String zookeeper;
 
     /**
      * 构造器
@@ -56,13 +56,13 @@ public class Configure {
         properties.entrySet().forEach((entry) -> {
             LOGGER.info("configure key = {}, value = {}", entry.getKey(), entry.getValue());
         });
-        Configure.port = Integer.valueOf(properties.getProperty(ConfigConsts.JWITCHER_PORT, ConfigConsts.DEFAULT_JWITCHER_PORT));
         Configure.databaseName = properties.getProperty(ConfigConsts.JWITCHER_DATABASE_NAME, ConfigConsts.DEFAULT_JWITCHER_DATABASE_NAME);
         Configure.databaseUser = properties.getProperty(ConfigConsts.JWITCHER_DATABASE_USER, ConfigConsts.DEFAULT_JWITCHER_DATABASE_USER);
         Configure.databasePass = properties.getProperty(ConfigConsts.JWITCHER_DATABASE_PASS, ConfigConsts.DEFAULT_JWITCHER_DATABASE_PASS);
         Configure.databaseHost = properties.getProperty(ConfigConsts.JWITCHER_DATABASE_HOST, ConfigConsts.DEFAULT_JWITCHER_DATABASE_HOST);
         Configure.databasePort = Integer.valueOf(properties.getProperty(ConfigConsts.JWITCHER_DATABASE_PORT, ConfigConsts.DEFAULT_JWITCHER_DATABASE_PORT));
         Configure.databaseOpts = properties.getProperty(ConfigConsts.JWITCHER_DATABASE_OPTS, ConfigConsts.DEFAULT_JWITCHER_DATABASE_OPTS);
+        Configure.zookeeper = properties.getProperty(ConfigConsts.JWITCHER_DISCOVERY_ZOOKEEPER, ConfigConsts.DEFAULT_JWITCHER_DISCOVERY_ZOOKEEPER);
     }
 
     /**

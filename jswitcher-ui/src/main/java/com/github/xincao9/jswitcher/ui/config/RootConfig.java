@@ -13,12 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.github.xincao9.jswitcher.ui.config;
 
-import com.github.xincao9.jsonrpc.core.client.JsonRPCClient;
-import com.github.xincao9.jswitcher.api.service.SwitcherService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -28,15 +24,4 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RootConfig {
 
-    @Autowired
-    private JsonRPCClient jsonRPCClient;
-
-    /**
-     * 开关服务
-     * 
-     * @return 开关服务
-     */
-    public SwitcherService switcherService () {
-        return jsonRPCClient.proxy(SwitcherService.class);
-    }
 }
