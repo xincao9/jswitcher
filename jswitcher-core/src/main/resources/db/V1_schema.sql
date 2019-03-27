@@ -1,5 +1,7 @@
 CREATE DATABASE switcher;
 
+USE switcher;
+
 CREATE TABLE `switcher` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `key` varchar(64) NOT NULL DEFAULT '',

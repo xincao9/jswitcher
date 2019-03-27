@@ -15,8 +15,9 @@
  */
 package com.github.xincao9.jswitcher.ui.controller;
 
+import com.github.xincao9.jsonrpc.core.DiscoveryService;
 import com.github.xincao9.jsonrpc.core.protocol.Endpoint;
-import com.github.xincao9.jswitcher.ui.service.SwitcherService;
+import com.github.xincao9.jswitcher.api.service.SwitcherService;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +38,7 @@ public class SwitcherController {
     private static final Logger LOGGER = LoggerFactory.getLogger(SwitcherController.class);
 
     @Autowired
-    private SwitcherService switcherService;
+    private DiscoveryService discoveryService;
 
     /**
      * 端点
@@ -47,7 +48,7 @@ public class SwitcherController {
     @GetMapping("endpoints")
     public ResponseEntity<List<Endpoint>> endpoints() {
         try {
-            List<Endpoint> endpoints = switcherService.query(SwitcherService.class.getTypeName());
+            List<Endpoint> endpoints = discoveryService.query(SwitcherService.class.getTypeName());
             if (endpoints == null || endpoints.isEmpty()) {
                 return ResponseEntity.status(400).build();
             }
