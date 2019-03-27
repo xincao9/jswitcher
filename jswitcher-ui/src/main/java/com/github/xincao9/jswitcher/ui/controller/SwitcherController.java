@@ -15,15 +15,24 @@
  */
 package com.github.xincao9.jswitcher.ui.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.github.xincao9.jsonrpc.core.DiscoveryService;
+import com.github.xincao9.jsonrpc.core.JsonRPCClient;
+import com.github.xincao9.jsonrpc.core.constant.ResponseCode;
 import com.github.xincao9.jsonrpc.core.protocol.Endpoint;
+import com.github.xincao9.jsonrpc.core.protocol.Request;
+import com.github.xincao9.jsonrpc.core.protocol.Response;
 import com.github.xincao9.jswitcher.api.service.SwitcherService;
+import com.github.xincao9.jswitcher.api.vo.Switcher;
 import java.util.List;
+import java.util.Objects;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -39,11 +48,13 @@ public class SwitcherController {
 
     @Autowired
     private DiscoveryService discoveryService;
+    @Autowired
+    private JsonRPCClient jsonRPCClient;
 
     /**
      * 端点
-     * 
-     * @return 
+     *
+     * @return 端点
      */
     @GetMapping("endpoints")
     public ResponseEntity<List<Endpoint>> endpoints() {
@@ -55,6 +66,39 @@ public class SwitcherController {
             return ResponseEntity.ok(endpoints);
         } catch (Throwable e) {
             LOGGER.error(e.getMessage());
+        }
+        return ResponseEntity.status(500).build();
+    }
+
+    /**
+     * 开关列表
+     * 
+     * @param host 主机
+     * @param port 端口
+     * @return 开关列表
+     */
+    @GetMapping("switcheres/{host}/{port}")
+    public ResponseEntity<List<Switcher>> switcheres(@PathVariable String host, @PathVariable Integer port) {
+        if (StringUtils.isBlank(host) || port == null || port <= 0 || port > 65535) {
+            return ResponseEntity.status(400).build();
+        }
+        StringBuilder method = new StringBuilder();
+        method.append(SwitcherService.class.getTypeName())
+                .append('.')
+                .append("list");
+        Request request = Request.createRequest(Boolean.TRUE, method.toString());
+        request.setDirect(Boolean.TRUE);
+        try {
+            Response response = jsonRPCClient.invoke(request);
+            if (Objects.equals(response.getCode(), ResponseCode.OK)) {
+                if (response.getData() == null) {
+                    return null;
+                }
+                return ResponseEntity.ok(JSONArray.parseArray(String.valueOf(response.getData()), Switcher.class));
+            }
+            throw new RuntimeException(response.getMsg());
+        } catch (Throwable ex) {
+            LOGGER.error(ex.getMessage());
         }
         return ResponseEntity.status(500).build();
     }
