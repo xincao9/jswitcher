@@ -77,7 +77,7 @@ public class SwitcherController {
      * @param port 端口
      * @return 开关列表
      */
-    @GetMapping("switcheres/{host}/{port}")
+    @GetMapping("keys/{host}/{port}")
     public ResponseEntity<List<Switcher>> switcheres(@PathVariable String host, @PathVariable Integer port) {
         if (StringUtils.isBlank(host) || port == null || port <= 0 || port > 65535) {
             return ResponseEntity.status(400).build();
