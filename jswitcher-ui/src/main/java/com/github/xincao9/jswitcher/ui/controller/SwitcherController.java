@@ -61,7 +61,7 @@ public class SwitcherController {
     /**
      * 开关列表
      * 
-     * @return 
+     * @return 开关
      */
     @GetMapping("keys")
     public ResponseEntity<List<Map<String, Object>>> keys() {
@@ -124,7 +124,14 @@ public class SwitcherController {
         return ResponseEntity.ok(getKeysByHostAndPort(host, port));
     }
 
-    public List<Switcher> getKeysByHostAndPort (String host, Integer port) {
+    /**
+     * 开关列表
+     * 
+     * @param host 主机
+     * @param port 端口
+     * @return 开关列表
+     */
+    private List<Switcher> getKeysByHostAndPort (String host, Integer port) {
         StringBuilder method = new StringBuilder();
         method.append(SwitcherService.class.getTypeName())
                 .append('.')
