@@ -18,7 +18,8 @@ package com.github.xincao9.jswitcher.ui.config;
 import org.springframework.context.annotation.Configuration;
 
 /**
- *
+ * 根配置
+ * 
  * @author xincao9@gmail.com
  */
 @Configuration
