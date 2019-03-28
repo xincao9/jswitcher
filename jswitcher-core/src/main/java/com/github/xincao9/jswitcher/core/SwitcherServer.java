@@ -76,7 +76,7 @@ public class SwitcherServer {
         SwitcherDAO switcherDAO = new SwitcherDAO();
         this.switcherService = new SwitcherServiceImpl(switcherDAO);
         try {
-            this.jsonRPCServer = JsonRPCServer.defaultJsonRPCServer(ConfigConsts.DEFAULT_CONFIG_FILE, new ZKDiscoveryServiceImpl(Configure.zookeeper));
+            this.jsonRPCServer = JsonRPCServer.defaultJsonRPCServer(Configure.port, new ZKDiscoveryServiceImpl(Configure.zookeeper));
             this.jsonRPCServer.register(this.switcherService);
             this.jsonRPCServer.start();
         } catch (Throwable e) {

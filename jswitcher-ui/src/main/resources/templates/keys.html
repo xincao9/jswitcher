@@ -9,26 +9,32 @@
                 <table class="table table-striped table-dark">
                     <thead>
                         <tr>
-                            <th>实例</th>
+                            <th>编号</th>
                             <th>主机</th>
                             <th>端口</th>
                             <th>开关</th>
                             <th>描述</th>
                             <th>状态</th>
                             <th>服务质量</th>
+                            <th>操作</th>
                             <th>创建时间</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="key in keys">
-                            <td>{{ key.instanceId }}</td>
+                            <td>{{ no + 1 }}</td>
                             <td>{{ key.host }}</td>
                             <td>{{ key.port }}</td>
                             <td>{{ key.key }}</td>
                             <td>{{ key.describe }}</td>
-                            <td>{{ key.open }}</td>
+                            <td>{{ key.open ? "开" : "关" }}</td>
                             <td>{{ key.qos }}</td>
-                            <td>{{ key.createTime }}</td>
+                            <td>
+                                <a class="text-success" v-on:click="change(key)">切换</a>
+                                |
+                                <a class="text-warning" v-on:click="persistence(key)">固化</a>
+                            </td>
+                            <td>{{ key.createTime | datetime }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -37,18 +43,49 @@
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script type="text/javascript">
+Vue.filter('datetime', function (ms) {
+    var date = new Date(ms);
+    return date.toLocaleString();
+});
+
 var keys = new Vue({
     el: '#keys',
     data() {
         return {
-            keys: []
+            keys: [],
+            no: 0
         };
+    },
+    methods: {
+        change: function (key) {
+            var url = 'http://localhost:8080/switcher/key/' + (key.open ? 'off' : 'on') + '/' + key.host + '/' + key.port + '/' + key.key;
+            axios.get(url).then(
+                    (response) => {
+                if (response.status !== 200) {
+                    console.log(response);
+                }
+                window.location.reload();
+            });
+        },
+        persistence: function (key) {
+            var url = 'http://localhost:8080/switcher/key/set/' + key.host + '/' + key.port + '/' + key.key + '/' + key.open;
+            axios.get(url).then(
+                    (response) => {
+                if (response.status !== 200) {
+                    console.log(response);
+                }
+                window.location.reload();
+            });
+        }
     },
     mounted() {
         axios.get('http://localhost:8080/switcher/keys').then(
                 (response) => {
-            this.keys = response.data;
-            console.log(keys);
+            if (response.status !== 200) {
+                console.log(response);
+            } else {
+                this.keys = response.data;
+            }
         });
     }
 });

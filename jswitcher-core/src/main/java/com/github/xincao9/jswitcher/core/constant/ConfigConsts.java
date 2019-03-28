@@ -23,9 +23,9 @@ package com.github.xincao9.jswitcher.core.constant;
 public class ConfigConsts {
 
     public static final String DEFAULT_CONFIG_FILE = "/jswitcher.properties";
-    
-    public static final String JWITCHER_PORT = "jswitcher.port";
-    public static final String DEFAULT_JWITCHER_PORT = "12306";
+
+    public static final String JWITCHER_SERVER_PORT = "jswitcher.server.port";
+    public static final String DEFAULT_JWITCHER_SERVER_PORT = "12306";
     public static final String JWITCHER_DATABASE_NAME = "jswitcher.database.name";
     public static final String DEFAULT_JWITCHER_DATABASE_NAME = "switcher";
     public static final String JWITCHER_DATABASE_USER = "jswitcher.database.user";

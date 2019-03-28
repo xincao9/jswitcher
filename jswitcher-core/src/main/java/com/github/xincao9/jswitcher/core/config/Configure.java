@@ -24,12 +24,14 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 配置类
- * 
+ *
  * @author xincao9@gmail.com
  */
 public class Configure {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Configure.class);
+
+    public static Integer port;
     public static String databaseName;
     public static String databaseUser;
     public static String databasePass;
@@ -40,7 +42,7 @@ public class Configure {
 
     /**
      * 构造器
-     * 
+     *
      * @param properties 属性
      */
     public Configure(Properties properties) {
@@ -49,13 +51,14 @@ public class Configure {
 
     /**
      * 初始化
-     * 
+     *
      * @param properties 属性
      */
     public static void init(Properties properties) {
         properties.entrySet().forEach((entry) -> {
             LOGGER.info("configure key = {}, value = {}", entry.getKey(), entry.getValue());
         });
+        Configure.port = Integer.valueOf(properties.getProperty(ConfigConsts.JWITCHER_SERVER_PORT, ConfigConsts.DEFAULT_JWITCHER_SERVER_PORT));
         Configure.databaseName = properties.getProperty(ConfigConsts.JWITCHER_DATABASE_NAME, ConfigConsts.DEFAULT_JWITCHER_DATABASE_NAME);
         Configure.databaseUser = properties.getProperty(ConfigConsts.JWITCHER_DATABASE_USER, ConfigConsts.DEFAULT_JWITCHER_DATABASE_USER);
         Configure.databasePass = properties.getProperty(ConfigConsts.JWITCHER_DATABASE_PASS, ConfigConsts.DEFAULT_JWITCHER_DATABASE_PASS);
@@ -67,10 +70,10 @@ public class Configure {
 
     /**
      * 初始化
-     * 
+     *
      * @param filename 文件名
      */
-    public static void init (String filename) {
+    public static void init(String filename) {
         Properties properties = new Properties();
         try {
             properties.load(Configure.class.getResourceAsStream(filename));
@@ -79,6 +82,5 @@ public class Configure {
         }
         init(properties);
     }
-
 
 }
