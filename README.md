@@ -37,14 +37,14 @@ CREATE TABLE `switcher` (
 **_jswitcher.properties_**
 
 ```
-jsonrpc.server.port=12306
+jswitcher.server.port=12306
+jswitcher.discovery.zookeeper=localhost:2181
 jswitcher.database.name=switcher
 jswitcher.database.user=root
-jswitcher.database.pass=asdf
+jswitcher.database.pass=
 jswitcher.database.host=127.0.0.1
 jswitcher.database.port=3306
 jswitcher.database.opts=useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&autoReconnect=true
-jswitcher.discovery.zookeeper=localhost:2181
 ```
 
 **_Sample_**
