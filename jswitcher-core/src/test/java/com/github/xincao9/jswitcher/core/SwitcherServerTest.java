@@ -66,7 +66,6 @@ public class SwitcherServerTest {
             System.out.println("key closed status");
         }
         switcherService.set("key", Boolean.FALSE);
-        System.in.read();
         switcherServer.close();
     }
 

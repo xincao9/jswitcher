@@ -30,6 +30,11 @@
             </dependency>
             <dependency>
                 <groupId>com.github.xincao9</groupId>
+                <artifactId>jswitcher-spring-boot-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.xincao9</groupId>
                 <artifactId>jsonrpc-spring-boot-starter</artifactId>
                 <version>${jsonrpc.version}</version>
             </dependency>
@@ -101,6 +106,8 @@
         <module>jswitcher-api</module>
         <module>jswitcher-core</module>
         <module>jswitcher-ui</module>
+        <module>jswitcher-spring-boot-starter</module>
+        <module>jswitcher-sample</module>
     </modules>
     <url>https://github.com/xincao9/jswitcher</url>
     <developers>

@@ -28,6 +28,8 @@ public class ConfigConsts {
     public static final String DEFAULT_JWITCHER_APPLICATION_NAME = "default";
     public static final String JWITCHER_SERVER_PORT = "jswitcher.server.port";
     public static final String DEFAULT_JWITCHER_SERVER_PORT = "12306";
+    public static final String JWITCHER_DISCOVERY_ZOOKEEPER = "jswitcher.discovery.zookeeper";
+    public static final String DEFAULT_JWITCHER_DISCOVERY_ZOOKEEPER = "localhost:2181";
     public static final String JWITCHER_DATABASE_NAME = "jswitcher.database.name";
     public static final String DEFAULT_JWITCHER_DATABASE_NAME = "switcher";
     public static final String JWITCHER_DATABASE_USER = "jswitcher.database.user";
@@ -40,7 +42,5 @@ public class ConfigConsts {
     public static final String DEFAULT_JWITCHER_DATABASE_PORT = "3306";
     public static final String JWITCHER_DATABASE_OPTS = "jswitcher.database.opts";
     public static final String DEFAULT_JWITCHER_DATABASE_OPTS = "useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&autoReconnect=true";
-    public static final String JWITCHER_DISCOVERY_ZOOKEEPER = "jswitcher.discovery.zookeeper";
-    public static final String DEFAULT_JWITCHER_DISCOVERY_ZOOKEEPER = "localhost:2181";
 
 }

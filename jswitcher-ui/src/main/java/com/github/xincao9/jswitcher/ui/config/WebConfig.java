@@ -23,7 +23,7 @@ public class WebConfig implements WebMvcConfigurer {
      */
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("keys"); // 首页
+//        registry.addViewController("/").setViewName("keys"); // 首页
     }
 
     /**

@@ -5,3 +5,7 @@ jsonrpc:
         serverList: localhost:12306
         connectionTimeoutMS: 5000
         invokeTimeoutMS: 1000
+spring:
+    resources:
+        chain:
+            cache: false

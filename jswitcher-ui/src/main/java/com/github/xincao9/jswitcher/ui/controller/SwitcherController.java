@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -71,6 +72,7 @@ public class SwitcherController {
                 return ResponseEntity.status(400).build();
             }
             List<Map<String, Object>> keys = new ArrayList();
+            AtomicInteger no = new AtomicInteger(0);
             for (Endpoint endpoint : endpoints) {
                 List<Switcher> switcheres = getKeysByHostAndPort(endpoint.getHost(), endpoint.getPort());
                 if (switcheres == null || switcheres.isEmpty()) {
@@ -80,6 +82,7 @@ public class SwitcherController {
                     JSONObject v0 = JSONObject.parseObject(JSONObject.toJSONString(endpoint));
                     JSONObject v1 = JSONObject.parseObject(JSONObject.toJSONString(switcher));
                     v0.putAll(v1);
+                    v0.put("no", no.addAndGet(1));
                     keys.add(v0);
                 });
             }
