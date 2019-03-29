@@ -29,14 +29,53 @@ CREATE TABLE `switcher` (
 ```
 <dependency>
     <groupId>com.github.xincao9</groupId>
-    <artifactId>jswitcher-core</artifactId>
-    <version>1.0</version>
+    <artifactId>jswitcher-spring-boot-starter</artifactId>
+    <version>1.1</version>
 </dependency>
 ```
 
-**_jswitcher.properties_**
+**_ServiceApplication_**
 
 ```
+/**
+ * Service
+ *
+ * @author xincao9@gmail.com
+ */
+@SpringBootApplication
+@EnableJswitcher
+public class ServiceApplication {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ServiceApplication.class);
+    @Autowired
+    private SwitcherService switcherService;
+    private static final String KEY = ServiceApplication.class.getCanonicalName();
+
+    public static void main(String[] args) {
+        SpringApplication.run(ServiceApplication.class, args);
+
+    }
+
+    @Bean
+    public CommandLineRunner commandLineRunner() {
+        return (String... args) -> {
+            switcherService.register(KEY, Boolean.TRUE, "recording ServiceApplication log", QoS.API);
+            for (int no = 0; no < 100; no++) {
+                if (switcherService.isOpen(KEY)) {
+                    LOGGER.info(RandomStringUtils.randomAscii(128));
+                }
+                TimeUnit.SECONDS.sleep(1);
+            }
+        };
+    }
+
+}
+```
+
+**_application.properties_**
+
+```
+jswitcher.application.name=jswitcher-sample
 jswitcher.server.port=12306
 jswitcher.discovery.zookeeper=localhost:2181
 jswitcher.database.name=switcher
@@ -46,27 +85,3 @@ jswitcher.database.host=127.0.0.1
 jswitcher.database.port=3306
 jswitcher.database.opts=useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&autoReconnect=true
 ```
-
-**_Sample_**
-
-```
-public class Sample {
-
-    public static void main() throws IOException {
-        SwitcherServer switcherServer = new SwitcherServer();
-        SwitcherService switcherService = switcherServer.getSwitcherService();
-        switcherService.register("key", Boolean.TRUE, "used test", QoS.API);
-        if (switcherService.isOpen("key")) {
-            System.out.println("key open status");
-        } else {
-            System.out.println("key closed status");
-        }
-        switcherService.set("key", Boolean.FALSE);
-        System.in.read();
-        switcherServer.close();
-    }
-
-}
-```
-
-* http://www.h-ui.net/
