@@ -106,7 +106,7 @@ jswitcher.database.opts=useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBeha
 ```
 wget https://search.maven.org/remotecontent?filepath=com/github/xincao9/jswitcher-ui/1.1/jswitcher-ui-1.1.jar
 java -jar jswitcher-ui-1.1.jar
-http://localhost:8080/keys.html
+http://localhost:8080
 ```
 
 ![keys](https://github.com/xincao9/jswitcher/blob/master/keys.png)
