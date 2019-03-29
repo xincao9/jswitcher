@@ -4,6 +4,7 @@ USE switcher;
 
 CREATE TABLE `switcher` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `application` varchar(64) NOT NULL DEFAULT 'default',
   `key` varchar(64) NOT NULL DEFAULT '',
   `open` tinyint(1) NOT NULL DEFAULT '0',
   `describe` varchar(128) DEFAULT NULL,

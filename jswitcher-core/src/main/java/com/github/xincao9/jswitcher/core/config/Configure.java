@@ -31,6 +31,7 @@ public class Configure {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Configure.class);
 
+    public static String application;
     public static Integer port;
     public static String databaseName;
     public static String databaseUser;
@@ -58,6 +59,7 @@ public class Configure {
         properties.entrySet().forEach((entry) -> {
             LOGGER.info("configure key = {}, value = {}", entry.getKey(), entry.getValue());
         });
+        Configure.application = properties.getProperty(ConfigConsts.JWITCHER_APPLICATION_NAME, ConfigConsts.DEFAULT_JWITCHER_APPLICATION_NAME);
         Configure.port = Integer.valueOf(properties.getProperty(ConfigConsts.JWITCHER_SERVER_PORT, ConfigConsts.DEFAULT_JWITCHER_SERVER_PORT));
         Configure.databaseName = properties.getProperty(ConfigConsts.JWITCHER_DATABASE_NAME, ConfigConsts.DEFAULT_JWITCHER_DATABASE_NAME);
         Configure.databaseUser = properties.getProperty(ConfigConsts.JWITCHER_DATABASE_USER, ConfigConsts.DEFAULT_JWITCHER_DATABASE_USER);

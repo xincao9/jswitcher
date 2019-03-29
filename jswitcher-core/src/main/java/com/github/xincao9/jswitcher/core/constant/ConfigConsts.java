@@ -24,6 +24,8 @@ public class ConfigConsts {
 
     public static final String DEFAULT_CONFIG_FILE = "/jswitcher.properties";
 
+    public static final String JWITCHER_APPLICATION_NAME = "jswitcher.application.name";
+    public static final String DEFAULT_JWITCHER_APPLICATION_NAME = "default";
     public static final String JWITCHER_SERVER_PORT = "jswitcher.server.port";
     public static final String DEFAULT_JWITCHER_SERVER_PORT = "12306";
     public static final String JWITCHER_DATABASE_NAME = "jswitcher.database.name";

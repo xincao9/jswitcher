@@ -34,9 +34,9 @@ import java.util.List;
 public class SwitcherDAO {
 
     private Connection connection;
-    private static final String INSERT = "insert into switcher (`key`, `open`, `describe`, `qos`) values (?, ?, ?, ?)";
-    private static final String UPDATE = "update switcher set `open`=? where `key`=? and `open`=?";
-    private static final String SELECT = "select `id`, `key`, `open`, `describe`, `qos` from switcher where `key`=?";
+    private static final String INSERT = "insert into switcher (`application`, `key`, `open`, `describe`, `qos`) values (?, ?, ?, ?, ?)";
+    private static final String UPDATE = "update switcher set `open`=? where `application`=? and `key`=? and `open`=?";
+    private static final String SELECT = "select `id`, `application`, `key`, `open`, `describe`, `qos` from switcher where `application`=? and `key`=?";
 
     /**
      * 构造器
@@ -61,10 +61,11 @@ public class SwitcherDAO {
         PreparedStatement statement = null;
         try {
             statement = this.connection.prepareStatement(INSERT);
-            statement.setString(1, String.valueOf(switcher.getKey()));
-            statement.setBoolean(2, switcher.getOpen());
-            statement.setString(3, String.valueOf(switcher.getDescribe()));
-            statement.setString(4, String.valueOf(switcher.getQos()));
+            statement.setString(1, switcher.getApplication());
+            statement.setString(2, String.valueOf(switcher.getKey()));
+            statement.setBoolean(3, switcher.getOpen());
+            statement.setString(4, String.valueOf(switcher.getDescribe()));
+            statement.setString(5, String.valueOf(switcher.getQos()));
             return statement.executeUpdate();
         } catch (Throwable e) {
             throw new SwitcherServerException("SwitcherDAO abnormal", e);
@@ -83,18 +84,20 @@ public class SwitcherDAO {
     /**
      * 修改开关状态
      *
+     * @param application 应用名
      * @param key 键值
      * @param expected 期望开关状态
      * @param open 开关状态
      * @return 影响条数
      */
-    public int changeStatusByKey(String key, boolean expected, boolean open) {
+    public int changeStatusByKey(String application, String key, boolean expected, boolean open) {
         PreparedStatement statement = null;
         try {
             statement = this.connection.prepareStatement(UPDATE);
             statement.setBoolean(1, open);
-            statement.setString(2, key);
-            statement.setBoolean(3, expected);
+            statement.setString(2, application);
+            statement.setString(3, key);
+            statement.setBoolean(4, expected);
             return statement.executeUpdate();
         } catch (Throwable e) {
             throw new SwitcherServerException("SwitcherDAO abnormal", e);
@@ -112,22 +115,25 @@ public class SwitcherDAO {
     /**
      * 查询开关
      *
+     * @param application 应用名
      * @param key 键值
      * @return 开关
      */
-    public Switcher selectByKey(String key) {
+    public Switcher selectByKey(String application, String key) {
         List<Switcher> switcheres = null;
         PreparedStatement statement = null;
         ResultSet rs = null;
 
         try {
             statement = this.connection.prepareStatement(SELECT);
-            statement.setString(1, key);
+            statement.setString(1, application);
+            statement.setString(2, key);
             rs = statement.executeQuery();
             if (rs != null) {
                 switcheres = new ArrayList();
                 while (rs.next()) {
                     Switcher switcher = new Switcher();
+                    switcher.setApplication(rs.getString("application"));
                     switcher.setKey(rs.getString("key"));
                     switcher.setOpen(rs.getBoolean("open"));
                     switcher.setQos(QoS.valueOf(rs.getString("qos")));

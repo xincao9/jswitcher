@@ -21,6 +21,7 @@ import com.github.xincao9.jswitcher.api.vo.Switcher;
 import com.github.xincao9.jswitcher.core.dao.SwitcherDAO;
 import com.github.xincao9.jswitcher.api.exception.KeyNotFoundException;
 import com.github.xincao9.jswitcher.api.exception.ParameterInvalidException;
+import com.github.xincao9.jswitcher.core.config.Configure;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +41,7 @@ public class SwitcherServiceImpl implements SwitcherService {
 
     private final Map<String, Switcher> keyAndSwitcher = new ConcurrentHashMap();
     private final SwitcherDAO switcherDAO;
+    private final String application;
 
     /**
      * 构造器
@@ -48,6 +50,16 @@ public class SwitcherServiceImpl implements SwitcherService {
      */
     public SwitcherServiceImpl(SwitcherDAO switcherDAO) {
         this.switcherDAO = switcherDAO;
+        this.application = Configure.application;
+    }
+
+    /**
+     *
+     * @param key
+     * @return
+     */
+    private String appkey(String key) {
+        return String.format("%s-%s", this.application, key);
     }
 
     /**
@@ -63,20 +75,22 @@ public class SwitcherServiceImpl implements SwitcherService {
         if (StringUtils.isBlank(key)) {
             throw new ParameterInvalidException("key can not be empty!");
         }
-        if (!this.keyAndSwitcher.containsKey(key)) {
+        String appkey = appkey(key);
+        if (!this.keyAndSwitcher.containsKey(appkey)) {
             Switcher switcher = getSwitcherByKey(key);
             if (switcher == null) {
-                if (!this.keyAndSwitcher.containsKey(key)) {
+                if (!this.keyAndSwitcher.containsKey(appkey)) {
                     switcher = new Switcher();
+                    switcher.setApplication(this.application);
                     switcher.setKey(key);
                     switcher.setOpen(open);
                     switcher.setDescribe(describe);
                     switcher.setQos(qos);
-                    this.keyAndSwitcher.put(key, switcher);
+                    this.keyAndSwitcher.put(appkey, switcher);
                     LOGGER.warn("new registration switch {}", switcher.toString());
                 }
             } else {
-                this.keyAndSwitcher.put(key, switcher);
+                this.keyAndSwitcher.put(appkey, switcher);
                 LOGGER.warn("load switch information {}", switcher.toString());
             }
         }
@@ -93,8 +107,9 @@ public class SwitcherServiceImpl implements SwitcherService {
         if (StringUtils.isBlank(key)) {
             throw new ParameterInvalidException("key can not be empty!");
         }
-        if (this.keyAndSwitcher.containsKey(key)) {
-            return this.keyAndSwitcher.get(key).getOpen();
+        String appkey = appkey(key);
+        if (this.keyAndSwitcher.containsKey(appkey)) {
+            return this.keyAndSwitcher.get(appkey).getOpen();
         }
         LOGGER.warn("this switch has not been registered in the application. key = {}", key);
         return false;
@@ -122,10 +137,11 @@ public class SwitcherServiceImpl implements SwitcherService {
         if (StringUtils.isBlank(key)) {
             throw new ParameterInvalidException("key can not be empty!");
         }
-        if (!this.keyAndSwitcher.containsKey(key)) {
+        String appkey = appkey(key);
+        if (!this.keyAndSwitcher.containsKey(appkey)) {
             throw new KeyNotFoundException(String.format("key = %s can't find!", key));
         }
-        return this.keyAndSwitcher.get(key).getOpen();
+        return this.keyAndSwitcher.get(appkey).getOpen();
     }
 
     /**
@@ -138,10 +154,11 @@ public class SwitcherServiceImpl implements SwitcherService {
         if (StringUtils.isBlank(key)) {
             throw new ParameterInvalidException("key can not be empty!");
         }
-        if (!this.keyAndSwitcher.containsKey(key)) {
+        String appkey = appkey(key);
+        if (!this.keyAndSwitcher.containsKey(appkey)) {
             throw new KeyNotFoundException(String.format("key = %s can't find!", key));
         }
-        this.keyAndSwitcher.get(key).setOpen(true);
+        this.keyAndSwitcher.get(appkey).setOpen(true);
     }
 
     /**
@@ -154,10 +171,11 @@ public class SwitcherServiceImpl implements SwitcherService {
         if (StringUtils.isBlank(key)) {
             throw new ParameterInvalidException("key can not be empty!");
         }
-        if (!this.keyAndSwitcher.containsKey(key)) {
+        String appkey = appkey(key);
+        if (!this.keyAndSwitcher.containsKey(appkey)) {
             throw new KeyNotFoundException(String.format("key = %s can't find!", key));
         }
-        this.keyAndSwitcher.get(key).setOpen(false);
+        this.keyAndSwitcher.get(appkey).setOpen(false);
     }
 
     /**
@@ -171,15 +189,16 @@ public class SwitcherServiceImpl implements SwitcherService {
         if (StringUtils.isBlank(key)) {
             throw new ParameterInvalidException("key can not be empty!");
         }
-        if (!this.keyAndSwitcher.containsKey(key)) {
+        String appkey = appkey(key);
+        if (!this.keyAndSwitcher.containsKey(appkey)) {
             throw new KeyNotFoundException(String.format("key = %s can't find!", key));
         }
-        this.keyAndSwitcher.get(key).setOpen(open);
+        this.keyAndSwitcher.get(appkey).setOpen(open);
         Switcher switcher = getSwitcherByKey(key);
         if (switcher != null) {
-            this.switcherDAO.changeStatusByKey(key, !open, open);
+            this.switcherDAO.changeStatusByKey(this.application, key, !open, open);
         } else {
-            this.switcherDAO.insert(this.keyAndSwitcher.get(key)); // resolve repeated insertion problems by using key as a unique index
+            this.switcherDAO.insert(this.keyAndSwitcher.get(appkey)); // resolve repeated insertion problems by using key as a unique index
         }
     }
 
@@ -203,7 +222,7 @@ public class SwitcherServiceImpl implements SwitcherService {
         if (StringUtils.isBlank(key)) {
             throw new ParameterInvalidException("key can not be empty!");
         }
-        return this.switcherDAO.selectByKey(key);
+        return this.switcherDAO.selectByKey(this.application, key);
     }
 
 }

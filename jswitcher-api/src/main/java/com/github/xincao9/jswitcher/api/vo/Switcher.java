@@ -22,10 +22,29 @@ package com.github.xincao9.jswitcher.api.vo;
  */
 public class Switcher {
 
+    private String application; // 应用名
     private String key; // 键值
     private String describe; // 描述
     private Boolean open; // 开关状态
     private QoS qos; // 服务质量
+
+    /**
+     * 获取应用名
+     * 
+     * @return 
+     */
+    public String getApplication() {
+        return application;
+    }
+
+    /**
+     * 设置应用名
+     * 
+     * @param application 应用名
+     */
+    public void setApplication(String application) {
+        this.application = application;
+    }
 
     /**
      * 获取键值

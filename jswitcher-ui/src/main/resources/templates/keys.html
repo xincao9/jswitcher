@@ -5,11 +5,12 @@
     </head>
     <body>
         <div id="keys" class="container">
-            <div class="row">
+            <div class="row table-responsive-md">
                 <table class="table table-striped table-dark">
                     <thead>
                         <tr>
                             <th>编号</th>
+                            <th>应用名</th>
                             <th>主机</th>
                             <th>端口</th>
                             <th>开关</th>
@@ -23,11 +24,13 @@
                     <tbody>
                         <tr v-for="key in keys">
                             <td>{{ no + 1 }}</td>
+                            <td>{{ key.application }}</td>
                             <td>{{ key.host }}</td>
                             <td>{{ key.port }}</td>
                             <td>{{ key.key }}</td>
                             <td>{{ key.describe }}</td>
-                            <td>{{ key.open ? "开" : "关" }}</td>
+                            <td v-if="key.open"><span class="badge badge-success">开</span></td>
+                            <td v-else><span class="badge badge-secondary">关</span></td>
                             <td>{{ key.qos }}</td>
                             <td>
                                 <a class="text-success" v-on:click="change(key)">切换</a>
