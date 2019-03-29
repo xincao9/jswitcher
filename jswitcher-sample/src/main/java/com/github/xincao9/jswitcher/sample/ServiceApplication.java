@@ -60,7 +60,7 @@ public class ServiceApplication {
     @Bean
     public CommandLineRunner commandLineRunner() {
         return (String... args) -> {
-            switcherService.register(KEY, Boolean.TRUE, "recording ServiceApplication log", QoS.API);
+            switcherService.register(KEY, Boolean.TRUE, "Recording ServiceApplication Logger", QoS.API);
             for (int no = 0; no < 100; no++) {
                 if (switcherService.isOpen(KEY)) {
                     LOGGER.info(RandomStringUtils.randomAscii(128));
