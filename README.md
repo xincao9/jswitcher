@@ -37,6 +37,21 @@ CREATE TABLE `switcher` (
 **_ServiceApplication_**
 
 ```
+package com.github.xincao9.jswitcher.sample;
+
+import com.github.xincao9.jswitcher.api.service.SwitcherService;
+import com.github.xincao9.jswitcher.api.vo.QoS;
+import com.github.xincao9.jswitcher.spring.boot.starter.EnableJswitcher;
+import java.util.concurrent.TimeUnit;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+
 /**
  * Service
  *
