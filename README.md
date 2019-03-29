@@ -86,4 +86,12 @@ jswitcher.database.port=3306
 jswitcher.database.opts=useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&autoReconnect=true
 ```
 
+**_jswitcher-ui_**
+
+```
+wget https://search.maven.org/remotecontent?filepath=com/github/xincao9/jswitcher-ui/1.1/jswitcher-ui-1.1.jar
+java -jar jswitcher-ui-1.1.jar
+http://localhost:8080/keys.html
+```
+
 ![keys](https://github.com/xincao9/jswitcher/blob/master/keys.png)
