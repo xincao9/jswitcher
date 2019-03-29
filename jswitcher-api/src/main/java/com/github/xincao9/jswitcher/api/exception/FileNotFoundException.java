@@ -22,6 +22,8 @@ package com.github.xincao9.jswitcher.api.exception;
  */
 public class FileNotFoundException extends Error {
 
+    private static final long serialVersionUID = -5090052951016013186L;
+
     /**
      * 构造器
      * 

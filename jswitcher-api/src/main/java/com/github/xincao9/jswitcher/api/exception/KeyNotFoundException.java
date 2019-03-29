@@ -22,6 +22,8 @@ package com.github.xincao9.jswitcher.api.exception;
  */
 public class KeyNotFoundException extends Error {
 
+    private static final long serialVersionUID = 523379402407155039L;
+
     /**
      * 构造器
      *

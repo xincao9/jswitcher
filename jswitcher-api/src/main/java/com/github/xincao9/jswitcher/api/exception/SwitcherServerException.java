@@ -22,6 +22,8 @@ package com.github.xincao9.jswitcher.api.exception;
  */
 public class SwitcherServerException extends Error {
 
+    private static final long serialVersionUID = -4106106363160643468L;
+
     /**
      * 构造器
      *

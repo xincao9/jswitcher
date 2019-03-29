@@ -22,6 +22,8 @@ package com.github.xincao9.jswitcher.api.exception;
  */
 public class ParameterInvalidException extends Error {
 
+    private static final long serialVersionUID = 4131666077704060000L;
+
     /**
      * 参数异常
      *

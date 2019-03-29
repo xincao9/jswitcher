@@ -7,3 +7,8 @@
 /target/
 /jswitcher-spring-boot-starter/target/
 /jswitcher-sample/target/
+/jswitcher-api/bin/target/
+/jswitcher-core/bin/target/
+/jswitcher-sample/bin/target/
+/jswitcher-spring-boot-starter/bin/target/
+/jswitcher-ui/bin/target/
