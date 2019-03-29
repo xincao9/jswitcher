@@ -1,8 +1,8 @@
 ## jswitcher
 
-### java switcher service
+### Grayscale release, Service degradation
 
-Applicable to Operation and Maintenance Service Intervention Management Suite
+Support for grayscale publishing of functions, service downgrade, Automated operation and maintenance
 
 ![logo](https://github.com/xincao9/jswitcher/blob/master/logo.png)
 
