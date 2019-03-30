@@ -26,6 +26,8 @@ import com.github.xincao9.jsonrpc.core.protocol.Response;
 import com.github.xincao9.jswitcher.api.service.SwitcherService;
 import com.github.xincao9.jswitcher.api.vo.Switcher;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -67,9 +69,23 @@ public class SwitcherController {
     @GetMapping("keys")
     public ResponseEntity<List<Map<String, Object>>> keys() {
         try {
+            return ResponseEntity.ok(getKeys());
+        } catch (Throwable e) {
+            LOGGER.error(e.getMessage());
+        }
+        return ResponseEntity.status(500).build();
+    }
+
+    /**
+     * 获取开关列表
+     * 
+     * @return 开关列表
+     */
+    private List<Map<String, Object>> getKeys () {
+        try {
             List<Endpoint> endpoints = discoveryService.query(SwitcherService.class.getTypeName());
             if (endpoints == null || endpoints.isEmpty()) {
-                return ResponseEntity.status(400).build();
+                return Collections.EMPTY_LIST;
             }
             List<Map<String, Object>> keys = new ArrayList();
             AtomicInteger no = new AtomicInteger(0);
@@ -86,7 +102,35 @@ public class SwitcherController {
                     keys.add(v0);
                 });
             }
-            return ResponseEntity.ok(keys);
+            return keys;
+        } catch (Throwable e) {
+            LOGGER.error(e.getMessage());
+        }
+        return Collections.EMPTY_LIST;
+    }
+
+    /**
+     * 开关列表
+     * 
+     * @return 开关
+     */
+    @GetMapping("tree")
+    public ResponseEntity<Map<String, Map<String, List<Map<String, Object>>>>> tree() {
+        try {
+            List<Map<String, Object>> keys = getKeys();
+            Map<String, Map<String, List<Map<String, Object>>>> tree = new HashMap();
+            for (Map<String, Object> key : keys) {
+                String application = String.valueOf(key.get("application"));
+                if (!tree.containsKey(application)) {
+                    tree.put(application, new HashMap());
+                }
+                String name = String.valueOf(key.get("key"));
+                if (!tree.get(application).containsKey(name)) {
+                    tree.get(application).put(name, new ArrayList());
+                }
+                tree.get(application).get(name).add(key);
+            }
+            return ResponseEntity.ok(tree);
         } catch (Throwable e) {
             LOGGER.error(e.getMessage());
         }
