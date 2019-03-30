@@ -115,20 +115,38 @@ public class SwitcherController {
      * @return 开关
      */
     @GetMapping("tree")
-    public ResponseEntity<Map<String, Map<String, List<Map<String, Object>>>>> tree() {
+    public ResponseEntity<List<Map<String, Object>>> tree() {
         try {
             List<Map<String, Object>> keys = getKeys();
-            Map<String, Map<String, List<Map<String, Object>>>> tree = new HashMap();
+            Map<String, Map<String, List<Map<String, Object>>>> otree = new HashMap();
             for (Map<String, Object> key : keys) {
                 String application = String.valueOf(key.get("application"));
-                if (!tree.containsKey(application)) {
-                    tree.put(application, new HashMap());
+                if (!otree.containsKey(application)) {
+                    otree.put(application, new HashMap());
                 }
                 String name = String.valueOf(key.get("key"));
-                if (!tree.get(application).containsKey(name)) {
-                    tree.get(application).put(name, new ArrayList());
+                if (!otree.get(application).containsKey(name)) {
+                    otree.get(application).put(name, new ArrayList());
                 }
-                tree.get(application).get(name).add(key);
+                otree.get(application).get(name).add(key);
+            }
+            List<Map<String, Object>> tree = new ArrayList();
+            for (String application : otree.keySet()) {
+                Map<String, Object> m0 = new HashMap();
+                m0.put("text", application);
+                m0.put("selected", true);
+                m0.put("opened", true);
+                Map<String, List<Map<String, Object>>> m1 = otree.get(application);
+                List<Map<String, Object>> children = new ArrayList();
+                for (String name : m1.keySet()) {
+                    Map<String, Object> m3 = new HashMap();
+                    m3.put("text", name);
+                    m3.put("selected", true);
+                    m3.put("opened", true);
+                    children.add(m3);
+                }
+                m0.put("children", children);
+                tree.add(m0);
             }
             return ResponseEntity.ok(tree);
         } catch (Throwable e) {
