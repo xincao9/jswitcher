@@ -28,7 +28,7 @@
                             <td v-if="key.open"><span class="badge badge-success">开</span></td>
                             <td v-else><span class="badge badge-secondary">关</span></td>
                             <td>
-                                <a class="text-warning" data-toggle="modal" v-bind:data-target="'#' + key.no">明细</a>
+                                <a class="text-secondary" data-toggle="modal" v-bind:data-target="'#' + key.no">明细</a>
                                 <div v-bind:id="key.no" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="">
                                     <div class="modal-dialog modal-lg" role="document">
                                         <div class="modal-content">
@@ -115,8 +115,9 @@ var keys = new Vue({
                     (response) => {
                 if (response.status !== 200) {
                     console.log(response);
+                } else {
+                    key.open = !key.open;
                 }
-                window.location.reload();
             });
         },
         persistence: function (key) {
@@ -125,8 +126,9 @@ var keys = new Vue({
                     (response) => {
                 if (response.status !== 200) {
                     console.log(response);
+                } else {
+                    alert("固化成功");
                 }
-                window.location.reload();
             });
         }
     },
