@@ -6,24 +6,6 @@ Support for grayscale publishing of functions, service downgrade, Automated oper
 
 ![logo](https://github.com/xincao9/jswitcher/blob/master/logo.png)
 
-**_Create a table structure_**
-
-```
-## create a table of storage switch information
-
-CREATE TABLE `switcher` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `key` varchar(64) NOT NULL DEFAULT '',
-  `open` tinyint(1) NOT NULL DEFAULT '0',
-  `describe` varchar(128) DEFAULT NULL,
-  `qos` varchar(24) NOT NULL DEFAULT 'API',
-  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `key` (`key`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-```
-
 **_Maven dependency_**
 
 ```
@@ -101,7 +83,27 @@ jswitcher.database.port=3306
 jswitcher.database.opts=useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&autoReconnect=true
 ```
 
-**_jswitcher-ui_**
+**_Create a table structure_**
+
+```
+## create a table of storage switch information
+
+CREATE TABLE `switcher` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `key` varchar(64) NOT NULL DEFAULT '',
+  `open` tinyint(1) NOT NULL DEFAULT '0',
+  `describe` varchar(128) DEFAULT NULL,
+  `qos` varchar(24) NOT NULL DEFAULT 'API',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `key` (`key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+```
+
+### jswitcher-ui
+
+**_install_**
 
 ```
 wget https://search.maven.org/remotecontent?filepath=com/github/xincao9/jswitcher-ui/1.1/jswitcher-ui-1.1.jar
