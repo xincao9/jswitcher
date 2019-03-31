@@ -114,3 +114,8 @@ CREATE TABLE `switcher` (
 **_Used_**
 
 ![keys](https://github.com/xincao9/jswitcher/blob/master/keys.png)
+
+#### Contact
+
+* [issues](https://github.com/xincao9/jswitcher/issues)
+* xincao9@gmail.com
