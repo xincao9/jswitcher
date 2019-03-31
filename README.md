@@ -107,9 +107,9 @@ CREATE TABLE `switcher` (
 **_Install_**
 
 ```
-[download jswitcher-ui](https://search.maven.org/remotecontent?filepath=com/github/xincao9/jswitcher-ui/1.2/jswitcher-ui-1.2.jar)
+![download jswitcher-ui](https://search.maven.org/remotecontent?filepath=com/github/xincao9/jswitcher-ui/1.2/jswitcher-ui-1.2.jar)
 java -jar jswitcher-ui-1.2.jar --jsonrpc.discovery.zookeeper=localhost:2181
-[ui url](http://localhost:8080)
+![ui url](http://localhost:8080)
 ```
 
 **_Used_**
