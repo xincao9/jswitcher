@@ -12,7 +12,7 @@ Support for grayscale publishing of functions, service downgrade, Automated oper
 <dependency>
     <groupId>com.github.xincao9</groupId>
     <artifactId>jswitcher-spring-boot-starter</artifactId>
-    <version>1.1</version>
+    <version>1.2</version>
 </dependency>
 ```
 
@@ -107,8 +107,8 @@ CREATE TABLE `switcher` (
 **_Install_**
 
 ```
-wget https://search.maven.org/remotecontent?filepath=com/github/xincao9/jswitcher-ui/1.1/jswitcher-ui-1.1.jar
-java -jar jswitcher-ui-1.1.jar --jsonrpc.discovery.zookeeper=localhost:2181
+wget https://search.maven.org/remotecontent?filepath=com/github/xincao9/jswitcher-ui/1.2/jswitcher-ui-1.2.jar
+java -jar jswitcher-ui-1.2.jar --jsonrpc.discovery.zookeeper=localhost:2181
 http://localhost:8080
 ```
 
