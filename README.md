@@ -35,7 +35,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 /**
- * Service
+ * Service Application
  *
  * @author xincao9@gmail.com
  */
@@ -90,6 +90,7 @@ jswitcher.database.opts=useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBeha
 
 CREATE TABLE `switcher` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `application` varchar(64) NOT NULL DEFAULT 'default',
   `key` varchar(64) NOT NULL DEFAULT '',
   `open` tinyint(1) NOT NULL DEFAULT '0',
   `describe` varchar(128) DEFAULT NULL,
@@ -103,12 +104,14 @@ CREATE TABLE `switcher` (
 
 ### jswitcher-ui
 
-**_install_**
+**_Install_**
 
 ```
 wget https://search.maven.org/remotecontent?filepath=com/github/xincao9/jswitcher-ui/1.1/jswitcher-ui-1.1.jar
-java -jar jswitcher-ui-1.1.jar
+java -jar jswitcher-ui-1.1.jar --jsonrpc.discovery.zookeeper=localhost:2181
 http://localhost:8080
 ```
+
+**_Used_**
 
 ![keys](https://github.com/xincao9/jswitcher/blob/master/keys.png)
