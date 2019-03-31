@@ -63,7 +63,7 @@ public class SwitcherController {
 
     /**
      * 开关列表
-     * 
+     *
      * @return 开关
      */
     @GetMapping("keys")
@@ -78,10 +78,10 @@ public class SwitcherController {
 
     /**
      * 获取开关列表
-     * 
+     *
      * @return 开关列表
      */
-    private List<Map<String, Object>> getKeys () {
+    private List<Map<String, Object>> getKeys() {
         try {
             List<Endpoint> endpoints = discoveryService.query(SwitcherService.class.getTypeName());
             if (endpoints == null || endpoints.isEmpty()) {
@@ -102,6 +102,29 @@ public class SwitcherController {
                     keys.add(v0);
                 });
             }
+            Collections.sort(keys, (Map<String, Object> o1, Map<String, Object> o2) -> {
+                String application1 = String.valueOf(o1.get("application"));
+                String application2 = String.valueOf(o2.get("application"));
+                if (!application1.equalsIgnoreCase(application2)) {
+                    return application1.compareTo(application2);
+                }
+                String key1 = String.valueOf(o1.get("key"));
+                String key2 = String.valueOf(o2.get("key"));
+                if (!key1.equalsIgnoreCase(key2)) {
+                    return key1.compareTo(key2);
+                }
+                String host1 = String.valueOf(o1.get("host"));
+                String host2 = String.valueOf(o2.get("host"));
+                if (!host1.equalsIgnoreCase(host2)) {
+                    return host1.compareTo(host2);
+                }
+                String port1 = String.valueOf(o1.get("port"));
+                String port2 = String.valueOf(o2.get("port"));
+                if (!port1.equalsIgnoreCase(port2)) {
+                    return port1.compareTo(port2);
+                }
+                return 0;
+            });
             return keys;
         } catch (Throwable e) {
             LOGGER.error(e.getMessage());
@@ -111,7 +134,7 @@ public class SwitcherController {
 
     /**
      * 开关列表
-     * 
+     *
      * @return 开关
      */
     @GetMapping("tree")
@@ -191,12 +214,12 @@ public class SwitcherController {
 
     /**
      * 开关列表
-     * 
+     *
      * @param host 主机
      * @param port 端口
      * @return 开关列表
      */
-    private List<Switcher> getKeysByHostAndPort (String host, Integer port) {
+    private List<Switcher> getKeysByHostAndPort(String host, Integer port) {
         StringBuilder method = new StringBuilder();
         method.append(SwitcherService.class.getTypeName())
                 .append('.')
