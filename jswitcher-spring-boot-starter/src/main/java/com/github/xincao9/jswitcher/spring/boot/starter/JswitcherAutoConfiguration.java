@@ -86,7 +86,7 @@ public class JswitcherAutoConfiguration implements EnvironmentAware, DisposableB
     /**
      * 释放
      * 
-     * @throws Exception 
+     * @throws Exception 异常
      */
     @Override
     public void destroy() throws Exception {
