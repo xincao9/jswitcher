@@ -1,0 +1,14 @@
+jswitcher:
+    application:
+        name: jswitcher-sample
+    server:
+        port: 12306
+    discovery:
+        zookeeper: localhost:2181
+    database:
+        name: switcher
+        user: root
+        pass: asdf
+        host: 127.0.0.1
+        port: 3306
+        opts: useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&autoReconnect=true
