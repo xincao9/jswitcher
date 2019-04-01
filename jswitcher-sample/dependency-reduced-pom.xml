@@ -3,7 +3,7 @@
   <parent>
     <artifactId>jswitcher</artifactId>
     <groupId>com.github.xincao9</groupId>
-    <version>1.2</version>
+    <version>1.2.1</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>jswitcher-sample</artifactId>
@@ -78,7 +78,7 @@
     <dependency>
       <groupId>com.github.xincao9</groupId>
       <artifactId>jswitcher-spring-boot-starter</artifactId>
-      <version>1.2</version>
+      <version>1.2.1</version>
       <scope>provided</scope>
     </dependency>
     <dependency>

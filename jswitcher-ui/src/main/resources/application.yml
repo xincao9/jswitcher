@@ -6,6 +6,9 @@ jsonrpc:
         connectionTimeoutMS: 5000
         invokeTimeoutMS: 1000
 spring:
-    resources:
-        chain:
-            cache: false
+    devtools:
+        livereload:
+            enabled: true
+            port: 35729
+    restart:
+        enabled: true
