@@ -66,7 +66,7 @@ public class ZKDiscoveryServiceImpl implements DiscoveryService {
         this.client = CuratorFrameworkFactory.newClient(zookeeper, retryPolicy);
         this.client.start();
         this.client.getConnectionStateListenable().addListener((ConnectionStateListener) (CuratorFramework cf, ConnectionState cs) -> {
-            if (cs == ConnectionState.CONNECTED) {
+            if (cs == ConnectionState.RECONNECTED) {
                 if (pathValue != null && !pathValue.isEmpty()) {
                     pathValue.entrySet().forEach((entry) -> {
                         String path = entry.getKey();
