@@ -96,7 +96,7 @@
     <dependency>
       <groupId>com.github.xincao9</groupId>
       <artifactId>jsonrpc-spring-boot-starter</artifactId>
-      <version>1.2.3</version>
+      <version>1.2.4</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
