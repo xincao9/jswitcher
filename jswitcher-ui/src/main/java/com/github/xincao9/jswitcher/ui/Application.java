@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.github.xincao9.jswitcher.ui;
 
 import com.github.xincao9.jsonrpc.spring.boot.starter.EnableJsonRPC;

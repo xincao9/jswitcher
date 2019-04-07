@@ -296,7 +296,6 @@ public class SwitcherController {
         if (StringUtils.isBlank(host) || port == null || port <= 0 || port > 65535 || StringUtils.isBlank(key)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-
         StringBuilder method = new StringBuilder();
         method.append(SwitcherService.class.getTypeName())
                 .append('.')
