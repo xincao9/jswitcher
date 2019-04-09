@@ -89,19 +89,18 @@ public class SwitcherController {
             }
             List<Map<String, Object>> keys = new ArrayList();
             AtomicInteger no = new AtomicInteger(0);
-            for (Endpoint endpoint : endpoints) {
+            endpoints.forEach((endpoint) -> {
                 List<Switcher> switcheres = getKeysByHostAndPort(endpoint.getHost(), endpoint.getPort());
-                if (switcheres == null || switcheres.isEmpty()) {
-                    continue;
+                if (!(switcheres == null || switcheres.isEmpty())) {
+                    switcheres.forEach((switcher) -> {
+                        JSONObject v0 = JSONObject.parseObject(JSONObject.toJSONString(endpoint));
+                        JSONObject v1 = JSONObject.parseObject(JSONObject.toJSONString(switcher));
+                        v0.putAll(v1);
+                        v0.put("no", no.addAndGet(1));
+                        keys.add(v0);
+                    });
                 }
-                switcheres.forEach((switcher) -> {
-                    JSONObject v0 = JSONObject.parseObject(JSONObject.toJSONString(endpoint));
-                    JSONObject v1 = JSONObject.parseObject(JSONObject.toJSONString(switcher));
-                    v0.putAll(v1);
-                    v0.put("no", no.addAndGet(1));
-                    keys.add(v0);
-                });
-            }
+            });
             Collections.sort(keys, (Map<String, Object> o1, Map<String, Object> o2) -> {
                 String application1 = String.valueOf(o1.get("application"));
                 String application2 = String.valueOf(o2.get("application"));
@@ -142,7 +141,7 @@ public class SwitcherController {
         try {
             List<Map<String, Object>> keys = getKeys();
             Map<String, Map<String, List<Map<String, Object>>>> otree = new HashMap();
-            for (Map<String, Object> key : keys) {
+            keys.forEach((key) -> {
                 String application = String.valueOf(key.get("application"));
                 if (!otree.containsKey(application)) {
                     otree.put(application, new HashMap());
@@ -152,25 +151,33 @@ public class SwitcherController {
                     otree.get(application).put(name, new ArrayList());
                 }
                 otree.get(application).get(name).add(key);
-            }
+            });
             List<Map<String, Object>> tree = new ArrayList();
-            for (String application : otree.keySet()) {
+            otree.keySet().stream().map((application) -> {
                 Map<String, Object> m0 = new HashMap();
                 m0.put("text", application);
                 m0.put("selected", true);
                 m0.put("opened", true);
                 Map<String, List<Map<String, Object>>> m1 = otree.get(application);
                 List<Map<String, Object>> children = new ArrayList();
-                for (String name : m1.keySet()) {
+                m1.keySet().stream().map((name) -> {
                     Map<String, Object> m3 = new HashMap();
                     m3.put("text", name);
+                    return m3;
+                }).map((m3) -> {
                     m3.put("selected", true);
+                    return m3;
+                }).map((m3) -> {
                     m3.put("opened", true);
+                    return m3;
+                }).forEachOrdered((m3) -> {
                     children.add(m3);
-                }
+                });
                 m0.put("children", children);
+                return m0;
+            }).forEachOrdered((m0) -> {
                 tree.add(m0);
-            }
+            });
             return ResponseEntity.ok(tree);
         } catch (Throwable e) {
             LOGGER.error(e.getMessage());
