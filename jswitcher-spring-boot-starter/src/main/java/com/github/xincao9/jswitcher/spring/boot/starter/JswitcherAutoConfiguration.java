@@ -20,6 +20,9 @@ import com.github.xincao9.jswitcher.core.SwitcherServer;
 import com.github.xincao9.jswitcher.core.constant.ConfigConsts;
 import java.util.Properties;
 import org.springframework.beans.factory.DisposableBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
@@ -95,4 +98,18 @@ public class JswitcherAutoConfiguration implements EnvironmentAware, DisposableB
         }
     }
 
+    /**
+     * 注册Uri拦截器
+     * 
+     * @return 
+     */
+    @ConditionalOnWebApplication
+    @ConditionalOnClass(FilterRegistrationBean.class)
+    @Bean
+    public FilterRegistrationBean filterRegistrationBean(){
+        FilterRegistrationBean bean = new FilterRegistrationBean();
+        bean.setFilter(new UriInterceptor(switcherService()));
+        bean.addUrlPatterns("/*");
+        return bean;
+    }
 }
