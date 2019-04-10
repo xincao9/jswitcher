@@ -1,6 +1,6 @@
 ## jswitcher
 
-### Grayscale release, Service degradation
+### Grayscale release, Service degradation [中文文档](https://github.com/xincao9/jswitcher/wiki/%E4%B8%AD%E6%96%87%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E)
 
 Support for grayscale publishing of functions, service downgrade, Automated operation and maintenance
 
@@ -119,5 +119,5 @@ CREATE TABLE `switcher` (
 
 #### Contact
 
-* [issues](https://github.com/xincao9/jswitcher/issues)
+* [https://github.com/xincao9/jswitcher/issues](https://github.com/xincao9/jswitcher/issues)
 * xincao9@gmail.com
