@@ -42,7 +42,7 @@
                     </thead>
                     <tbody>
                         <tr v-for="key in keys">
-                            <td>{{ getNo() }}</td>
+                            <td>{{ key.no }}</td>
                             <td>{{ endpoint.o1 }}</td>
                             <td>{{ endpoint.o2 }}</td>
                             <td>{{ key.key }}</td>
@@ -139,14 +139,10 @@ var keys = new Vue({
             endpoints: [],
             application: '--请选择--',
             applications: [],
-            endpoint: null,
-            no: 0
+            endpoint: null
         };
     },
     methods: {
-        getNo: function () {
-            return this.no++;
-        },
         change: function (key) {
             var url = '/switcher/key/' + (key.open ? 'off' : 'on') + '/' + this.endpoint.o1 + '/' + this.endpoint.o2 + '/' + window.btoa(key.key);
             axios.get(url).then(
@@ -176,7 +172,6 @@ var keys = new Vue({
                     console.log(response);
                 } else {
                     this.keys = response.data;
-                    this.no = 0;
                 }
             });
         },

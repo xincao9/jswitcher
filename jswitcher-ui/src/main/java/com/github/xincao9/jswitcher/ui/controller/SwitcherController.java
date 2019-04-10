@@ -29,6 +29,7 @@ import com.github.xincao9.jswitcher.api.vo.Switcher;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -173,11 +174,21 @@ public class SwitcherController {
      * @return 开关列表
      */
     @GetMapping("endpoint/keys/{host}/{port}")
-    public ResponseEntity<List<Switcher>> endpointKeys(@PathVariable String host, @PathVariable Integer port) {
+    public ResponseEntity<List<Map<String, Object>>> endpointKeys(@PathVariable String host, @PathVariable Integer port) {
         if (StringUtils.isBlank(host) || port == null || port <= 0 || port > 65535) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        return ResponseEntity.ok(getKeysByHostAndPort(host, port));
+        List<Switcher> switchers = getKeysByHostAndPort(host, port);
+        if (switchers == null || switchers.isEmpty()) {
+            return ResponseEntity.status(400).build();
+        }
+        AtomicInteger no = new AtomicInteger(0);
+        return ResponseEntity.ok(switchers.stream().map((t) -> {
+            Map<String, Object> map = JSONObject.parseObject(JSONObject.toJSONString(t)).getInnerMap();
+            map.put("no", no.incrementAndGet());
+            map.put("createTime", new Date());
+            return map;
+        }).collect(Collectors.toList()));
     }
 
     /**
