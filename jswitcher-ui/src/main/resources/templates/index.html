@@ -8,6 +8,26 @@
     <body>
         <div id="keys" class="container">
             <hr>
+            <div>
+                <form>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <select class="form-control" id="application" name="application" v-model="application" @change='getEndpointsByApplication'>
+                                <option>--请选择--</option>
+                                <option :value="application" v-for="application in applications">{{ application }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <div class="form-check form-check-inline" v-for="e in endpoints" @click="refresh">
+                                <input class="form-check-input" type="radio" v-model="endpoint" :value="e">
+                                <label class="form-check-label" for="endpoint">{{ e.o1 }}:{{ e.o2 }}</label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
             <div class="row table-responsive-md">
                 <table class="table table-striped table-dark">
                     <thead>
@@ -22,9 +42,9 @@
                     </thead>
                     <tbody>
                         <tr v-for="key in keys">
-                            <td>{{ key.no }}</td>
-                            <td>{{ key.host }}</td>
-                            <td>{{ key.port }}</td>
+                            <td>{{ getNo() }}</td>
+                            <td>{{ endpoint.o1 }}</td>
+                            <td>{{ endpoint.o2 }}</td>
                             <td>{{ key.key }}</td>
                             <td v-if="key.open"><span class="badge badge-success">开</span></td>
                             <td v-else><span class="badge badge-secondary">关</span></td>
@@ -36,15 +56,15 @@
                                             <table class="table table-striped table-dark">
                                                 <tr>
                                                     <td>应用名</td>
-                                                    <td>{{ key.application }}</td>
+                                                    <td>{{ application }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>主机</td>
-                                                    <td>{{ key.host }}</td>
+                                                    <td>{{ endpoint.o1 }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>端口</td>
-                                                    <td>{{ key.port }}</td>
+                                                    <td>{{ endpoint.o2 }}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>开关</td>
@@ -115,12 +135,20 @@ var keys = new Vue({
     el: '#keys',
     data() {
         return {
-            keys: []
+            keys: [],
+            endpoints: [],
+            application: '--请选择--',
+            applications: [],
+            endpoint: null,
+            no: 0
         };
     },
     methods: {
+        getNo: function () {
+            return this.no++;
+        },
         change: function (key) {
-            var url = '/switcher/key/' + (key.open ? 'off' : 'on') + '/' + key.host + '/' + key.port + '/' + window.btoa(key.key);
+            var url = '/switcher/key/' + (key.open ? 'off' : 'on') + '/' + this.endpoint.o1 + '/' + this.endpoint.o2 + '/' + window.btoa(key.key);
             axios.get(url).then(
                     (response) => {
                 if (response.status !== 200) {
@@ -131,7 +159,7 @@ var keys = new Vue({
             });
         },
         persistence: function (key) {
-            var url = '/switcher/key/set/' + key.host + '/' + key.port + '/' + window.btoa(key.key) + '/' + key.open;
+            var url = '/switcher/key/set/' + this.endpoint.o1 + '/' + this.endpoint.o2 + '/' + window.btoa(key.key) + '/' + key.open;
             axios.get(url).then(
                     (response) => {
                 if (response.status !== 200) {
@@ -140,15 +168,44 @@ var keys = new Vue({
                     alert('固化成功');
                 }
             });
+        },
+        refresh: function () {
+            axios.get('/switcher/endpoint/keys/' + this.endpoint.o1 + '/' + this.endpoint.o2).then(
+                    (response) => {
+                if (response.status !== 200) {
+                    console.log(response);
+                } else {
+                    this.keys = response.data;
+                    this.no = 0;
+                }
+            });
+        },
+        getEndpointsByApplication: function () {
+            if ('--请选择--' === this.application) {
+                return;
+            }
+            axios.get('/switcher/application/' + this.application + '/endpoints').then(
+                    (response) => {
+                if (response.status !== 200) {
+                    console.log(response);
+                } else {
+                    this.endpoints = response.data;
+                    if (this.endpoints === null || this.endpoints.length <= 0) {
+                        return;
+                    }
+                    this.endpoint = this.endpoints[0];
+                    this.refresh();
+                }
+            });
         }
     },
     mounted() {
-        axios.get('/switcher/keys').then(
+        axios.get('/switcher/applications').then(
                 (response) => {
             if (response.status !== 200) {
                 console.log(response);
             } else {
-                this.keys = response.data;
+                this.applications = response.data;
             }
         });
     }

@@ -21,6 +21,7 @@ import com.github.xincao9.jsonrpc.core.DiscoveryService;
 import com.github.xincao9.jsonrpc.core.JsonRPCClient;
 import com.github.xincao9.jsonrpc.core.constant.ResponseCode;
 import com.github.xincao9.jsonrpc.core.protocol.Endpoint;
+import com.github.xincao9.jsonrpc.core.protocol.Pair;
 import com.github.xincao9.jsonrpc.core.protocol.Request;
 import com.github.xincao9.jsonrpc.core.protocol.Response;
 import com.github.xincao9.jswitcher.api.service.SwitcherService;
@@ -28,11 +29,12 @@ import com.github.xincao9.jswitcher.api.vo.Switcher;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,21 +63,6 @@ public class SwitcherController {
     private static final String ON = "on";
     private static final String OFF = "off";
     private static final String SET = "set";
-
-    /**
-     * 开关列表
-     *
-     * @return 开关
-     */
-    @GetMapping("keys")
-    public ResponseEntity<List<Map<String, Object>>> keys() {
-        try {
-            return ResponseEntity.ok(getKeys());
-        } catch (Throwable e) {
-            LOGGER.error(e.getMessage());
-        }
-        return ResponseEntity.status(500).build();
-    }
 
     /**
      * 获取开关列表
@@ -133,53 +120,18 @@ public class SwitcherController {
     }
 
     /**
-     * 开关列表
+     * 获得应用列表
      *
-     * @return 开关
+     * @return 应用列表
      */
-    @GetMapping("tree")
-    public ResponseEntity<List<Map<String, Object>>> tree() {
+    @GetMapping("applications")
+    public ResponseEntity<Set<String>> applications() {
         try {
             List<Map<String, Object>> keys = getKeys();
-            Map<String, Map<String, List<Map<String, Object>>>> otree = new HashMap();
-            keys.forEach((key) -> {
-                String application = String.valueOf(key.get("application"));
-                if (!otree.containsKey(application)) {
-                    otree.put(application, new HashMap());
-                }
-                String name = String.valueOf(key.get("key"));
-                if (!otree.get(application).containsKey(name)) {
-                    otree.get(application).put(name, new ArrayList());
-                }
-                otree.get(application).get(name).add(key);
-            });
-            List<Map<String, Object>> tree = new ArrayList();
-            otree.keySet().stream().map((application) -> {
-                Map<String, Object> m0 = new HashMap();
-                m0.put("text", application);
-                m0.put("selected", true);
-                m0.put("opened", true);
-                Map<String, List<Map<String, Object>>> m1 = otree.get(application);
-                List<Map<String, Object>> children = new ArrayList();
-                m1.keySet().stream().map((name) -> {
-                    Map<String, Object> m3 = new HashMap();
-                    m3.put("text", name);
-                    return m3;
-                }).map((m3) -> {
-                    m3.put("selected", true);
-                    return m3;
-                }).map((m3) -> {
-                    m3.put("opened", true);
-                    return m3;
-                }).forEachOrdered((m3) -> {
-                    children.add(m3);
-                });
-                m0.put("children", children);
-                return m0;
-            }).forEachOrdered((m0) -> {
-                tree.add(m0);
-            });
-            return ResponseEntity.ok(tree);
+            if (keys == null || keys.isEmpty()) {
+                return ResponseEntity.status(400).build();
+            }
+            return ResponseEntity.ok(keys.stream().map((key) -> String.valueOf(key.get("application"))).collect(Collectors.toSet()));
         } catch (Throwable e) {
             LOGGER.error(e.getMessage());
         }
@@ -187,18 +139,26 @@ public class SwitcherController {
     }
 
     /**
-     * 端点
+     * 获得节点列表
      *
-     * @return 端点
+     * @param application 应用名
+     * @return 节点列表
      */
-    @GetMapping("endpoints")
-    public ResponseEntity<List<Endpoint>> endpoints() {
+    @GetMapping("application/{application}/endpoints")
+    public ResponseEntity<List<Pair<String, String>>> applicationEndpoints(@PathVariable String application) {
         try {
-            List<Endpoint> endpoints = discoveryService.query(SwitcherService.class.getTypeName());
-            if (endpoints == null || endpoints.isEmpty()) {
+            List<Map<String, Object>> keys = getKeys();
+            if (keys == null || keys.isEmpty()) {
                 return ResponseEntity.status(400).build();
             }
-            return ResponseEntity.ok(endpoints);
+            List<Pair<String, String>> pairs = keys.stream()
+                    .filter((key) -> StringUtils.equals(String.valueOf(key.get("application")), application))
+                    .collect(Collectors.groupingBy((key) -> String.format("%s:%s", String.valueOf(key.get("host")), String.valueOf(key.get("port")))))
+                    .keySet().stream().map((str) -> {
+                        String[] ss = str.split(":");
+                        return new Pair<>(ss[0], ss[1]);
+                    }).collect(Collectors.toList());
+            return ResponseEntity.ok(pairs);
         } catch (Throwable e) {
             LOGGER.error(e.getMessage());
         }
