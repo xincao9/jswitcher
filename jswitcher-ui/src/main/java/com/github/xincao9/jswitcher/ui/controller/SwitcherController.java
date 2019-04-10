@@ -26,6 +26,7 @@ import com.github.xincao9.jsonrpc.core.protocol.Response;
 import com.github.xincao9.jswitcher.api.service.SwitcherService;
 import com.github.xincao9.jswitcher.api.vo.Switcher;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -303,6 +304,7 @@ public class SwitcherController {
         if (StringUtils.isBlank(host) || port == null || port <= 0 || port > 65535 || StringUtils.isBlank(key)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
+        key = new String(Base64.getDecoder().decode(key));
         StringBuilder method = new StringBuilder();
         method.append(SwitcherService.class.getTypeName())
                 .append('.')

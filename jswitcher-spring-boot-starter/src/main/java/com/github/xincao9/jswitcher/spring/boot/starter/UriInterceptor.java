@@ -25,6 +25,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Uri拦截器
@@ -60,13 +61,17 @@ public class UriInterceptor implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest hsr = (HttpServletRequest) request;
-        String path = hsr.getPathInfo();
+        String path = hsr.getRequestURI();
         String method = hsr.getMethod();
+        if (StringUtils.isBlank(path)) {
+            path = "/";
+        }
         String key = String.format("%s:%s", method, path);
         switcherService.register(key, Boolean.TRUE, key, QoS.API);
         if (switcherService.isOpen(key)) {
             chain.doFilter(request, response);
+        } else {
+            request.getRequestDispatcher("/404").forward(request, response);
         }
     }
-
 }

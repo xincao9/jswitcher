@@ -120,7 +120,7 @@ var keys = new Vue({
     },
     methods: {
         change: function (key) {
-            var url = '/switcher/key/' + (key.open ? 'off' : 'on') + '/' + key.host + '/' + key.port + '/' + key.key;
+            var url = '/switcher/key/' + (key.open ? 'off' : 'on') + '/' + key.host + '/' + key.port + '/' + window.btoa(key.key);
             axios.get(url).then(
                     (response) => {
                 if (response.status !== 200) {
@@ -131,7 +131,7 @@ var keys = new Vue({
             });
         },
         persistence: function (key) {
-            var url = '/switcher/key/set/' + key.host + '/' + key.port + '/' + key.key + '/' + key.open;
+            var url = '/switcher/key/set/' + key.host + '/' + key.port + '/' + window.btoa(key.key) + '/' + key.open;
             axios.get(url).then(
                     (response) => {
                 if (response.status !== 200) {
