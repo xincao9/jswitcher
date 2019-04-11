@@ -17,6 +17,7 @@ package com.github.xincao9.jswitcher.ui.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.github.benmanes.caffeine.cache.Cache;
 import com.github.xincao9.jsonrpc.core.DiscoveryService;
 import com.github.xincao9.jsonrpc.core.JsonRPCClient;
 import com.github.xincao9.jsonrpc.core.constant.ResponseCode;
@@ -26,10 +27,10 @@ import com.github.xincao9.jsonrpc.core.protocol.Request;
 import com.github.xincao9.jsonrpc.core.protocol.Response;
 import com.github.xincao9.jswitcher.api.service.SwitcherService;
 import com.github.xincao9.jswitcher.api.vo.Switcher;
+import com.github.xincao9.jswitcher.ui.core.CustomCacheManager;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -64,33 +65,44 @@ public class SwitcherController {
     private static final String ON = "on";
     private static final String OFF = "off";
     private static final String SET = "set";
+    private static final String SWITCHER_LIST = "switcher:list";
+
+    @Autowired
+    private CustomCacheManager customCacheManager;
 
     /**
      * 获取开关列表
      *
      * @return 开关列表
      */
-    private List<Map<String, Object>> getKeys() {
+    private List<Map<String, Object>> getSwitcheres() {
         try {
+            Cache<String, List<Map<String, Object>>> cache = customCacheManager.getDefaultCache();
+            List<Map<String, Object>> resp;
+            resp = cache.getIfPresent(SWITCHER_LIST);
+            if (resp != null) {
+                return resp;
+            }
+            resp = new ArrayList();
             List<Endpoint> endpoints = discoveryService.query(SwitcherService.class.getTypeName());
             if (endpoints == null || endpoints.isEmpty()) {
                 return Collections.EMPTY_LIST;
             }
-            List<Map<String, Object>> keys = new ArrayList();
             AtomicInteger no = new AtomicInteger(0);
-            endpoints.forEach((endpoint) -> {
+            for (Endpoint endpoint : endpoints) {
                 List<Switcher> switcheres = getKeysByHostAndPort(endpoint.getHost(), endpoint.getPort());
-                if (!(switcheres == null || switcheres.isEmpty())) {
-                    switcheres.forEach((switcher) -> {
-                        JSONObject v0 = JSONObject.parseObject(JSONObject.toJSONString(endpoint));
-                        JSONObject v1 = JSONObject.parseObject(JSONObject.toJSONString(switcher));
-                        v0.putAll(v1);
-                        v0.put("no", no.addAndGet(1));
-                        keys.add(v0);
-                    });
+                if (switcheres == null || switcheres.isEmpty()) {
+                    continue;
                 }
-            });
-            Collections.sort(keys, (Map<String, Object> o1, Map<String, Object> o2) -> {
+                for (Switcher switcher : switcheres) {
+                    JSONObject v0 = JSONObject.parseObject(JSONObject.toJSONString(endpoint));
+                    JSONObject v1 = JSONObject.parseObject(JSONObject.toJSONString(switcher));
+                    v0.putAll(v1);
+                    v0.put("no", no.addAndGet(1));
+                    resp.add(v0);
+                }
+            }
+            Collections.sort(resp, (Map<String, Object> o1, Map<String, Object> o2) -> {
                 String application1 = String.valueOf(o1.get("application"));
                 String application2 = String.valueOf(o2.get("application"));
                 if (!application1.equalsIgnoreCase(application2)) {
@@ -113,7 +125,10 @@ public class SwitcherController {
                 }
                 return 0;
             });
-            return keys;
+            if (!resp.isEmpty()) {
+                cache.put(SWITCHER_LIST, resp);
+            }
+            return resp;
         } catch (Throwable e) {
             LOGGER.error(e.getMessage());
         }
@@ -128,7 +143,7 @@ public class SwitcherController {
     @GetMapping("applications")
     public ResponseEntity<Set<String>> applications() {
         try {
-            List<Map<String, Object>> keys = getKeys();
+            List<Map<String, Object>> keys = getSwitcheres();
             if (keys == null || keys.isEmpty()) {
                 return ResponseEntity.status(400).build();
             }
@@ -148,7 +163,7 @@ public class SwitcherController {
     @GetMapping("application/{application}/endpoints")
     public ResponseEntity<List<Pair<String, String>>> applicationEndpoints(@PathVariable String application) {
         try {
-            List<Map<String, Object>> keys = getKeys();
+            List<Map<String, Object>> keys = getSwitcheres();
             if (keys == null || keys.isEmpty()) {
                 return ResponseEntity.status(400).build();
             }
@@ -178,17 +193,14 @@ public class SwitcherController {
         if (StringUtils.isBlank(host) || port == null || port <= 0 || port > 65535) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        List<Switcher> switchers = getKeysByHostAndPort(host, port);
-        if (switchers == null || switchers.isEmpty()) {
+        List<Map<String, Object>> keys = getSwitcheres();
+        if (keys == null || keys.isEmpty()) {
             return ResponseEntity.status(400).build();
         }
-        AtomicInteger no = new AtomicInteger(0);
-        return ResponseEntity.ok(switchers.stream().map((t) -> {
-            Map<String, Object> map = JSONObject.parseObject(JSONObject.toJSONString(t)).getInnerMap();
-            map.put("no", no.incrementAndGet());
-            map.put("createTime", new Date());
-            return map;
-        }).collect(Collectors.toList()));
+        keys = keys.stream()
+                .filter((key) -> (StringUtils.equals(host, String.valueOf(key.get("host"))) && port.intValue() == (Integer) key.get("port")))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(keys);
     }
 
     /**
