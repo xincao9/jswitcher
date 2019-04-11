@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.xincao9</groupId>
     <artifactId>jswitcher</artifactId>
-    <version>1.2.1</version>
+    <version>1.2.2</version>
     <packaging>pom</packaging>
     <name>jswitcher</name>
     <description>Grayscale release, Service degradation</description>
