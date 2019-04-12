@@ -26,10 +26,11 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.MediaType;
 
 /**
  * Uri拦截器
- * 
+ *
  * @author xincao9@gmail.com
  */
 public class UriInterceptor implements Filter {
@@ -38,10 +39,10 @@ public class UriInterceptor implements Filter {
 
     /**
      * 构造器
-     * 
-     * @param switcherService 
+     *
+     * @param switcherService
      */
-    public UriInterceptor (SwitcherService switcherService) {
+    public UriInterceptor(SwitcherService switcherService) {
         this.switcherService = switcherService;
     }
 
@@ -51,7 +52,7 @@ public class UriInterceptor implements Filter {
 
     /**
      * 过滤器逻辑
-     * 
+     *
      * @param request 请求体
      * @param response 响应体
      * @param chain 过滤器链路
@@ -66,12 +67,15 @@ public class UriInterceptor implements Filter {
         if (StringUtils.isBlank(path)) {
             path = "/";
         }
-        String key = String.format("%s:%s", method, path);
-        switcherService.register(key, Boolean.TRUE, key, QoS.API);
-        if (switcherService.isOpen(key)) {
-            chain.doFilter(request, response);
-        } else {
-            request.getRequestDispatcher("/404").forward(request, response);
+        if (MediaType.APPLICATION_JSON_VALUE.equalsIgnoreCase(request.getContentType())
+                || MediaType.APPLICATION_XML_VALUE.equalsIgnoreCase(request.getContentType())) {
+            String key = String.format("%s:%s", method, path);
+            switcherService.register(key, Boolean.TRUE, key, QoS.API);
+            if (switcherService.isClose(key)) {
+                request.getRequestDispatcher("/error").forward(request, response);
+                return;
+            }
         }
+        chain.doFilter(request, response);
     }
 }
