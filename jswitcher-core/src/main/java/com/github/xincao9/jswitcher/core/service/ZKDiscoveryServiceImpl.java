@@ -17,8 +17,8 @@ package com.github.xincao9.jswitcher.core.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.github.xincao9.jsonrpc.core.DiscoveryService;
-import com.github.xincao9.jsonrpc.core.protocol.Endpoint;
+import com.github.xincao9.yurpc.core.DiscoveryService;
+import com.github.xincao9.yurpc.core.protocol.Endpoint;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

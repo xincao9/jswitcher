@@ -15,7 +15,6 @@
  */
 package com.github.xincao9.jswitcher.core;
 
-import com.github.xincao9.jsonrpc.core.JsonRPCServer;
 import com.github.xincao9.jswitcher.core.config.Configure;
 import com.github.xincao9.jswitcher.api.service.SwitcherService;
 import com.github.xincao9.jswitcher.core.dao.SwitcherDAO;
@@ -23,6 +22,7 @@ import com.github.xincao9.jswitcher.api.exception.SwitcherServerException;
 import com.github.xincao9.jswitcher.core.constant.ConfigConsts;
 import com.github.xincao9.jswitcher.core.service.SwitcherServiceImpl;
 import com.github.xincao9.jswitcher.core.service.ZKDiscoveryServiceImpl;
+import com.github.xincao9.yurpc.core.YuRPCServer;
 import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
 public class SwitcherServer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SwitcherServer.class);
-    private JsonRPCServer jsonRPCServer;
+    private YuRPCServer yuRPCServer;
     private SwitcherServiceImpl switcherService;
 
     /**
@@ -76,9 +76,9 @@ public class SwitcherServer {
         SwitcherDAO switcherDAO = new SwitcherDAO();
         this.switcherService = new SwitcherServiceImpl(switcherDAO);
         try {
-            this.jsonRPCServer = JsonRPCServer.defaultJsonRPCServer(Configure.port, new ZKDiscoveryServiceImpl(Configure.zookeeper));
-            this.jsonRPCServer.register(this.switcherService);
-            this.jsonRPCServer.start();
+            this.yuRPCServer = YuRPCServer.defaultYuRPCServer(Configure.port, new ZKDiscoveryServiceImpl(Configure.zookeeper));
+            this.yuRPCServer.register(this.switcherService);
+            this.yuRPCServer.start();
         } catch (Throwable e) {
             throw new SwitcherServerException("JsonRPCServer abnormal", e);
         }
@@ -95,11 +95,11 @@ public class SwitcherServer {
      * 
      */
     public void close() {
-        if (this.jsonRPCServer != null) {
+        if (this.yuRPCServer != null) {
             try {
                 LOGGER.warn("switcher-server closing！");
-                this.jsonRPCServer.shutdown();
-                this.jsonRPCServer = null;
+                this.yuRPCServer.shutdown();
+                this.yuRPCServer = null;
             } catch (Throwable e) {
                 throw new SwitcherServerException("JsonRPCServer abnormal", e);
             }
