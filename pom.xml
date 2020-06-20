@@ -11,10 +11,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <jsonrpc.version>1.2.5</jsonrpc.version>
+        <yurpc.version>1.2.5</yurpc.version>
         <curator.version>4.2.0</curator.version>
         <zookeeper.version>3.5.6</zookeeper.version>
-        <guava.version>23.0</guava.version>
+        <guava.version>29.0-jre</guava.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -35,13 +35,13 @@
             </dependency>
             <dependency>
                 <groupId>com.github.xincao9</groupId>
-                <artifactId>jsonrpc-spring-boot-starter</artifactId>
-                <version>${jsonrpc.version}</version>
+                <artifactId>yurpc-spring-boot-starter</artifactId>
+                <version>${yurpc.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.github.xincao9</groupId>
-                <artifactId>jsonrpc-core</artifactId>
-                <version>${jsonrpc.version}</version>
+                <artifactId>yurpc-core</artifactId>
+                <version>${yurpc.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.curator</groupId>
