@@ -14,7 +14,7 @@
         <yurpc.version>1.2.5</yurpc.version>
         <curator.version>4.2.0</curator.version>
         <zookeeper.version>3.5.6</zookeeper.version>
-        <guava.version>29.0-jre</guava.version>
+        <guava.version>32.0.0-jre</guava.version>
     </properties>
     <dependencyManagement>
         <dependencies>
